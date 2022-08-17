@@ -6,7 +6,7 @@ use App\Models\Ad_coordinates;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\ad_data;
-use App\Models\Ad_data as ModelsAd_data;
+// use App\Models\Ad_data as ModelsAd_data;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Response;
