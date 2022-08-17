@@ -25,6 +25,8 @@ class CreateAdDatasTable extends Migration
             $table->string('state')->nullable();
             $table->string('pincode')->nullable();
             $table->string('country')->nullable();
+            $table->string('hblocks')->nullable();
+            $table->string('wblocks')->nullable();
             $table->timestamps();
         });
     }
