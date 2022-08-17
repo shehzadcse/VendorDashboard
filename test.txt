@@ -4,3 +4,12 @@ heroku config:add DB_PORT=5432
 heroku config:add DB_DATABASE=deee7bbck5nrt6
 heroku config:add DB_USERNAME=ivewlohqvjglie
 heroku config:add DB_PASSWORD=fb693186d144ead3f277ecede5bfdd4c3d5a64c9423a813dbcc5afeb6f1b6fe2
+
+
+
+heroku config:add AWS_ACCESS_KEY_ID=AKIARJORWFABPIVIE3K4
+heroku config:add AWS_SECRET_ACCESS_KEY=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
+heroku config:add AWS_DEFAULT_REGION=ap-south-1
+heroku config:add AWS_BUCKET='ads-project-kolkata'
+heroku config:add AWS_USE_PATH_STYLE_ENDPOINT=false
+heroku config:add FILESYSTEM_DRIVER=s3
