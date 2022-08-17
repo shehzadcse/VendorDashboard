@@ -1,9 +1,13 @@
+heroku config:add APP_NAME=Laravel
+heroku config:add APP_ENV=production
+heroku config:add APP_URL=https://ads-proj-laravel.herokuapp.com/
+
 heroku config:add DB_CONNECTION=pgsql
-heroku config:add DB_HOST=deee7bbck5nrt6 host=ec2-52-207-15-147.compute-1.amazonaws.com
+heroku config:add DB_HOST=ec2-34-235-31-124.compute-1.amazonaws.com
 heroku config:add DB_PORT=5432
-heroku config:add DB_DATABASE=deee7bbck5nrt6
-heroku config:add DB_USERNAME=ivewlohqvjglie
-heroku config:add DB_PASSWORD=fb693186d144ead3f277ecede5bfdd4c3d5a64c9423a813dbcc5afeb6f1b6fe2
+heroku config:add DB_DATABASE=d5rputkbtsf5q8
+heroku config:add DB_USERNAME=wcjehompdesete
+heroku config:add DB_PASSWORD=3b9ff9f82e631c18d2cd6496d725fa95da8b077fd5ef598e39fe53c8ea59a3a6
 
 
 
