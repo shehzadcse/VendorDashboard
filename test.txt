@@ -13,3 +13,12 @@ heroku config:add AWS_DEFAULT_REGION=ap-south-1
 heroku config:add AWS_BUCKET='ads-project-kolkata'
 heroku config:add AWS_USE_PATH_STYLE_ENDPOINT=false
 heroku config:add FILESYSTEM_DRIVER=s3
+
+heroku config:add MAIL_MAILER=smtp
+heroku config:add MAIL_HOST=mailhog
+heroku config:add MAIL_PORT=1025
+heroku config:add MAIL_USERNAME=null
+heroku config:add MAIL_PASSWORD=null
+heroku config:add MAIL_ENCRYPTION=null
+heroku config:add MAIL_FROM_ADDRESS=null
+heroku config:add MAIL_FROM_NAME=Laravel

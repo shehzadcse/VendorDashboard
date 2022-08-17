@@ -128,7 +128,7 @@ class backendController extends Controller
     }
 
     public function createAd(Request $request){
-        $ad_data = new ad_data();
+        $ad_data =new Ad_data();
         $ad_data->company_name = $request->company_name;
         $ad_data->ad_tagline = $request->tagline;
         $ad_data->city = $request->city_name;
