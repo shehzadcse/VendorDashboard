@@ -1,14 +1,14 @@
 @extends('master')
 
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid" style="padding:10px">
     <h3>BUSSINESS PROFILE</h3>
 <br/>
 <form action="{{ route('bussiness_profile_save') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
         <label for="formFile" class="form-label">Image</label>
-        <input class="form-control" name="image" type="file" id="formFile">
+        <input class="form-control" name="image" type="file" id="formFile" style="    height: calc(3.25rem + 2px);">
     </div>
     
     <div class="row">

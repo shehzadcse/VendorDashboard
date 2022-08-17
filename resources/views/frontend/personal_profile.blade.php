@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container-fluid">
+<div class="container-fluid" style="padding: 10px">
     @if(session()->has('message'))
     <div class="alert alert-success">
         {{ session()->get('message') }}
