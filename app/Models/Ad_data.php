@@ -20,8 +20,8 @@ class Ad_data extends Model
        'state',
        'pincode',
        'country',
-       'h_blocks',
-       'w_blocks',
+       'hblocks',
+       'wblocks',
        'created_at',
        'updated_at',
     ];

@@ -26,4 +26,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('ads', [backendController::class, 'getalldata']);
 Route::post('register', [backendController::class, 'register']);
 Route::post('login', [backendController::class, 'login']);
+Route::get('create-ad', [backendController::class, 'createAd']);
 
