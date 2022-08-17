@@ -21,4 +21,4 @@ heroku config:add MAIL_USERNAME=null
 heroku config:add MAIL_PASSWORD=null
 heroku config:add MAIL_ENCRYPTION=null
 heroku config:add MAIL_FROM_ADDRESS=null
-heroku config:add MAIL_FROM_NAME=Laravel
+heroku config:add MAIL_FROM_NAME=Laravel 
