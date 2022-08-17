@@ -1,6 +1,6 @@
 heroku config:add DB_CONNECTION=pgsql
 heroku config:add DB_HOST=deee7bbck5nrt6 host=ec2-52-207-15-147.compute-1.amazonaws.com
 heroku config:add DB_PORT=5432
-heroku config:add DB_DATABASE=laravel
+heroku config:add DB_DATABASE=deee7bbck5nrt6
 heroku config:add DB_USERNAME=ivewlohqvjglie
 heroku config:add DB_PASSWORD=fb693186d144ead3f277ecede5bfdd4c3d5a64c9423a813dbcc5afeb6f1b6fe2
