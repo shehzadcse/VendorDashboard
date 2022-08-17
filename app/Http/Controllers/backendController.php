@@ -127,6 +127,38 @@ class backendController extends Controller
         return Response::json($users_data);
     }
 
-    
+    public function createAd(Request $request){
+        $ad_data = new ad_data();
+        $ad_data->company_name = $request->company_name;
+        $ad_data->ad_tagline = $request->tagline;
+        $ad_data->city = $request->city_name;
+        $ad_data->state = $request->state;
+        $ad_data->country = $request->country;
+        $ad_data->pincode = $request->pincode;      
+        $ad_data->hblocks = $request->blocksData['hBlocks'];
+        $ad_data->wblocks = $request->blocksData['wBlocks'];
+        $ad_data->address_1 = $request->addressLine1;
+        if(!$request->isLoggedIn)
+        {
+            $new_user = new User();
+            $new_user->email = $request->email;
+            $new_user->password = Hash::make('@Virus969');
+            $result = $new_user->save();
+            if($result){
+                $response = User::where('email', $request->email)->first();
+            $ad_data->user_id =  $response->id;
+            }
+            else{
+                return response(['message' => 'Auto Registration Failed.']);
+            }
+        }
+        else
+        {
+            $response = User::where('email', $request->email)->first();         
+            $ad_data->user_id =  $response->id;
+        }
+        $result = $ad_data->save();
+        $response = ad_data::find($ad_data->id);
+        return response([$response]);
+    }
 }
-// 4
