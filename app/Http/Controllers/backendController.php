@@ -77,6 +77,7 @@ class backendController extends Controller
         $ad_coordinates = New Ad_coordinates();
         $ad_coordinates->image = $path;
         $ad_data->Ad_coordinates()->save($ad_coordinates);
+        return view('frontend.bussiness_profie');
     }
 
     public function personal_profile_save(Request $request){
