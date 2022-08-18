@@ -6,7 +6,7 @@
 <br/>
 <form action="{{ route('bussiness_profile_save') }}" method="post" enctype="multipart/form-data">
         @csrf
-        
+        <input type="hidden" value={{csrf_token() }} />
         <div class="mb-3">
         <label for="formFile" class="form-label">Image</label>
         <input class="form-control" name="image" type="file" id="formFile" style="    height: calc(3.25rem + 2px);">
