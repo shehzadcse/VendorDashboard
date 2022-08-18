@@ -3,11 +3,11 @@ heroku config:add APP_ENV=production
 heroku config:add APP_URL=https://ads-proj-laravel.herokuapp.com/
 
 heroku config:add DB_CONNECTION=pgsql
-heroku config:add DB_HOST=ec2-34-235-31-124.compute-1.amazonaws.com
+heroku config:add DB_HOST=ec2-44-205-64-253.compute-1.amazonaws.com
 heroku config:add DB_PORT=5432
-heroku config:add DB_DATABASE=d5rputkbtsf5q8
-heroku config:add DB_USERNAME=wcjehompdesete
-heroku config:add DB_PASSWORD=3b9ff9f82e631c18d2cd6496d725fa95da8b077fd5ef598e39fe53c8ea59a3a6
+heroku config:add DB_DATABASE=d2j0hheddiagap
+heroku config:add DB_USERNAME=jndxcuroigctww
+heroku config:add DB_PASSWORD=57082efba6fbf1d330586b6d793cb5f1e8e6555b3d3cb601ecabf83e88a0085e
 
 
 
