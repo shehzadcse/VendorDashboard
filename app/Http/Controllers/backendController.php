@@ -86,7 +86,8 @@ class backendController extends Controller
         // return view('frontend.bussiness_profie');
         $ad_data = Ad_data::all();
         // return view('frontend.bussiness_profie')->with(["ads"=>$ad_data]);
-        $url="http://localhost:4200";
+        // $url="http://localhost:4200";
+        $url="https://ads-proj.vercel.app/";
         return  redirect()->to($url);
     }
 
