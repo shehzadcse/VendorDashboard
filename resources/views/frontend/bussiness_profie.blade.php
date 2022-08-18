@@ -4,7 +4,7 @@
 <div class="container-fluid" style="padding:10px">
     <h3>BUSSINESS PROFILE</h3>
 <br/>
-<form action="https://ads-proj-laravel.herokuapp.com/bussiness_profile_save" method="post" enctype="multipart/form-data">
+<form action="{{ route('bussiness_profile_save') }}" method="post" enctype="multipart/form-data">
         @csrf
         <input type="hidden" value={{csrf_token() }} />
         <div class="mb-3">
