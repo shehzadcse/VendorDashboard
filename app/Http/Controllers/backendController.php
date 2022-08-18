@@ -10,6 +10,7 @@ use App\Models\Ad_data as ModelsAd_data;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Response;
+use Illuminate\Support\Facades\DB;
 
 class backendController extends Controller
 {
@@ -64,20 +65,29 @@ class backendController extends Controller
         $path = Storage::disk('s3')->url($path);
 
         
-        $ad_data = new ad_data();
-        $ad_data->company_name = $request->company_name;
-        $ad_data->ad_tagline = $request->ads_tagline;
-        $ad_data->city = $request->city;
-        $ad_data->state = $request->state;
-        $ad_data->country = $request->country;
-        $ad_data->pincode = $request->pincode;
-        $ad_data->user_id = "7";
-        $ad_data->save();
+        // $ad_data = new ad_data();
+        // $ad_data->company_name = $request->company_name;
+        // $ad_data->ad_tagline = $request->ads_tagline;
+        // $ad_data->city = $request->city;
+        // $ad_data->state = $request->state;
+        // $ad_data->country = $request->country;
+        // $ad_data->pincode = $request->pincode;
+        // // $ad_data->user_id = "7";
+        // $ad_data->image = $path;
+        // $data = Ad_data::findOrFail($request->ad_id);
+        // $ad_data->user_id = $data->user_id;
+        // $ad_data->save();
+        $result = Ad_data::where('id',$request->ad_id)->update(['imageUrl'=>$path]);
+     
 
-        $ad_coordinates = New Ad_coordinates();
-        $ad_coordinates->image = $path;
-        $ad_data->Ad_coordinates()->save($ad_coordinates);
-        return view('frontend.bussiness_profie');
+        // $ad_coordinates = New Ad_coordinates();
+        // $ad_coordinates->image = $path;
+        // $ad_data->Ad_coordinates()->save($ad_coordinates);
+        // return view('frontend.bussiness_profie');
+        $ad_data = Ad_data::all();
+        // return view('frontend.bussiness_profie')->with(["ads"=>$ad_data]);
+        $url="http://localhost:4200";
+        return  redirect()->to($url);
     }
 
     public function personal_profile_save(Request $request){
@@ -95,36 +105,12 @@ class backendController extends Controller
     }
 
     public function getalldata(){
-        $user = User::all();
-        $ad_data = [];
-        $users_data = [];
-        foreach($user as $data){
-            $ads = User::find($data->id)->ad_data;
-            $ad_data[1] = $ads;
-            foreach($ad_data as $get_data){
-                $image_data = Ad_data::find($get_data->id)->ad_coordinates;
-                $users_data[] = [
-                            'id' => $get_data->id,
-                            'user_id' => $get_data->user_id,
-                            'company_name' => $get_data->company_name,
-                            'name' => $data->name,
-                            'email' => $data->email,
-                            'phone' => $data->phone,
-                            'tagline' => $get_data->ad_tagline,
-                            'addressLine1' => $get_data->address_1,
-                            'city_name' => $get_data->city,
-                            'city_name' => $get_data->city,
-                            'pincode' => $get_data->pincode,
-                            'state' => $get_data->state,
-                            'country' => $get_data->country,
-                            'h_blocks' => $get_data->h_blocks,
-                            'w_blocks' => $get_data->w_blocks,
-                            'ad_coordinates' => $image_data,
-                        ];
-            }
-        }
-        // return $users_data;
-        return Response::json($users_data);
+        $ads = DB::table('users')
+            ->join('ad_datas', 'users.id', '=', 'ad_datas.user_id')
+            ->join('ad_coordinates', 'ad_datas.id', '=', 'ad_coordinates.ad_id')
+            ->select('users.*', 'ad_datas.*', 'ad_coordinates.*')
+            ->get();
+        return Response::json($ads);
     }
 
     public function createAd(Request $request){
@@ -138,18 +124,47 @@ class backendController extends Controller
         $ad_data->hblocks = $request->blocksData['hBlocks'];
         $ad_data->wblocks = $request->blocksData['wBlocks'];
         $ad_data->address_1 = $request->addressLine1;
-        if(!$request->isLoggedIn)
+        $data = User::where('email', $request->email)->first();
+        if(!empty($data))
+        {           
+            if($data->count()<0)
+            {
+                $new_user = new User();
+                $new_user->name = isset($request->name)?$request->name:null;
+                $new_user->phone = isset($request->phone)?$request->phone:null;
+                $new_user->email = $request->email;
+                $new_user->password = Hash::make('@Virus969');
+                $result = $new_user->save();
+                if($result){
+                    $response = User::where('email', $request->email)->first();
+                $ad_data->user_id =  $response->id;
+                }
+                else{
+                    return response(['message' => 'Auto Registration Failed.']);
+                }
+            }
+            else
+            {
+                $response = User::where('email', $request->email)->first();         
+                $ad_data->user_id =  $response->id;
+            }
+        } 
+        else if(empty($data))
         {
             $new_user = new User();
+            $new_user->name = isset($request->name)?$request->name:null;
+            $new_user->phone = isset($request->phone)?$request->phone:null;
             $new_user->email = $request->email;
             $new_user->password = Hash::make('@Virus969');
             $result = $new_user->save();
-            if($result){
+            if($result)
+            {
                 $response = User::where('email', $request->email)->first();
-            $ad_data->user_id =  $response->id;
+                $ad_data->user_id =  $response->id;
             }
-            else{
-                return response(['message' => 'Auto Registration Failed.']);
+            else
+            {
+                return response(['message' => 'Auto Registration Failed for Empty Database.']);
             }
         }
         else
@@ -158,6 +173,27 @@ class backendController extends Controller
             $ad_data->user_id =  $response->id;
         }
         $result = $ad_data->save();
+        $ad_coordinatesobj = New Ad_coordinates();
+        $data = Ad_coordinates::where('ad_id', $ad_data->id)->first();
+        if(!empty($data))
+        {
+            if($data->count()<0)
+            { 
+                $ad_coordinatesobj->latitude =  isset($request->latitude)?$request->latitude:null;
+                $ad_coordinatesobj->longitude =  isset($request->longitude)?$request->longitude:null;
+                $ad_coordinatesobj->ad_id=$ad_data->id;
+                $ad_coordinatesobj->save();
+            }
+        }
+        else{
+            if(empty($data))
+            {
+                $ad_coordinatesobj->latitude =  isset($request->latitude)?$request->latitude:null;
+                $ad_coordinatesobj->longitude =  isset($request->longitude)?$request->longitude:null;
+                $ad_coordinatesobj->ad_id=$ad_data->id;
+                $ad_coordinatesobj->save();
+            }
+        }
         $response = ad_data::find($ad_data->id);
         return response([$response]);
     }

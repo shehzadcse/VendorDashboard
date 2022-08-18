@@ -16,7 +16,7 @@ class CreateAdCoordinatesTable extends Migration
         Schema::create('ad_coordinates', function (Blueprint $table) {
             $table->id();
             $table->tinyInteger('ad_id');
-            $table->string('image')->nullable();
+            // $table->string('image')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
             $table->timestamps();

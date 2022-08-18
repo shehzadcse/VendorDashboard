@@ -6,12 +6,26 @@
 <br/>
 <form action="{{ route('bussiness_profile_save') }}" method="post" enctype="multipart/form-data">
         @csrf
+        
         <div class="mb-3">
         <label for="formFile" class="form-label">Image</label>
         <input class="form-control" name="image" type="file" id="formFile" style="    height: calc(3.25rem + 2px);">
     </div>
-    
     <div class="row">
+        <div class="col-sm-12 col-md-12 mb-3">
+            <label for="company_name" class="form-label">Select Advertisement</label>
+            <select type="text" class="form-control" name="ad_id" id="ad_id" placeholder="">
+                @foreach ($ads as $item)
+                    <option value="{{$item->id}}">{{$item->ad_tagline}}</option>
+                @endforeach
+            </select>
+        </div>
+        {{-- <div class="col-sm-12 col-md-6 mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" id="email" placeholder="name@example.com">
+        </div> --}}
+    </div>
+    {{-- <div class="row">
         <div class="col-sm-12 col-md-6 mb-3">
             <label for="company_name" class="form-label">Company Name</label>
             <input type="text" class="form-control" name="company_name" id="company_name" placeholder="">
@@ -52,6 +66,7 @@
         </div>
     </div>
 
+    --}}
     <div class="row">
         <div class="col-sm-12">
             <button type="submit" class="btn btn-success">SUBMIT</button>

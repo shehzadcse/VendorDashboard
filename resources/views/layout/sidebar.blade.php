@@ -89,12 +89,12 @@
                 <p>Business Profile</p>
               </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
               <a href="{{ Route('personal_profile') }}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Personal Profile</p>
               </a>
-            </li>
+            </li> --}}
             {{-- <li class="nav-item">
               <a href="pages/layout/boxed.html" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
@@ -181,6 +181,24 @@
               </a>
             </li>    
             
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-hammer"></i>
+            <p>
+              Front Panel
+              <i class="fas fa-angle-left right"></i>
+              <span class="badge badge-info right">1</span>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="http://localhost:4200" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Go to Home</p>
+              </a>
+            </li>
           </ul>
         </li>
         {{-- <li class="nav-item">
