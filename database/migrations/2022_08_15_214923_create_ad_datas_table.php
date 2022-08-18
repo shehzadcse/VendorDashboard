@@ -27,6 +27,7 @@ class CreateAdDatasTable extends Migration
             $table->string('country')->nullable();
             $table->string('hblocks')->nullable();
             $table->string('wblocks')->nullable();
+            $table->string('imageUrl')->nullable();
             $table->timestamps();
         });
     }
