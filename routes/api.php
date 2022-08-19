@@ -29,4 +29,4 @@ Route::post('login', [backendController::class, 'login']);
 Route::post('create-ad', [backendController::class, 'createAd']);
 Route::get('get-ad-by-id', [backendController::class, 'getAdData']);
 Route::get('get-all-user-ads', [backendController::class, 'getUsersAllAds']);
-Route::get('upload-image', [backendController::class, 'uploadImage']);
+Route::post('upload-image', [backendController::class, 'uploadImage']);
