@@ -197,4 +197,27 @@ class backendController extends Controller
         $response = ad_data::find($ad_data->id);
         return response([$response]);
     }
+    public function getAdData(Request $request){
+        $ads = DB::table('ad_datas')
+        ->where('id', '=', $request->id)
+        ->get();
+        return Response::json($ads);
+    }
+    public function getUsersAllAds(Request $request){
+        $ads = DB::table('ad_datas')
+                ->where('user_id', '=', $request->user_id)
+                ->get();
+        return Response::json($ads);
+    }
+    public function uploadImage(Request $request){
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $imageName = time().'.'.$request->file('image')->extension();  
+        $path = Storage::disk('s3')->put('', $request->image, 'public');
+        $path = Storage::disk('s3')->url($path);
+        $result = Ad_data::where('id',$request->ad_id)->update(['imageUrl'=>$path]);
+        return Response::json($result);
+    }
+
 }
