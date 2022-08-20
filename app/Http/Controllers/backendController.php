@@ -219,5 +219,36 @@ class backendController extends Controller
         $result = Ad_data::where('id',$request->ad_id)->update(['imageUrl'=>$path]);
         return Response::json($result);
     }
+    public function updatePersonalProfile(Request $request){
+
+        $result = User::where('id',$request->id)->update
+        (
+            [
+                'name'=>$request->name,
+                'email'=>$request->email,
+                'phone'=>$request->phone
+            ]
+        );        
+        $user= User::where('id', $request->id)->get();
+        return Response::json($user);
+    }
+    public function updateBusinessProfile(Request $request){
+
+        $result = Ad_data::where('id',$request->id)->update
+        (
+            [
+                'company_name'=>$request->company_name,
+                'ad_tagline'=>$request->ad_tagline,
+                'city'=>$request->city,
+                'pincode'=>$request->pincode,
+                'state'=>$request->state,
+                'country'=>$request->country,
+                'address_1'=>$request->address_1
+            ]
+        );        
+        $user= Ad_data::where('id', $request->id)->get();
+        return Response::json($user);
+    }
+
 
 }
