@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ad_coordinates;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Models\Ad_data;
+use App\Models\ad_data;
 use App\Models\Ad_data as ModelsAd_data;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -86,8 +86,7 @@ class backendController extends Controller
         // return view('frontend.bussiness_profie');
         $ad_data = Ad_data::all();
         // return view('frontend.bussiness_profie')->with(["ads"=>$ad_data]);
-        // $url="http://localhost:4200";
-        $url="https://ads-proj.vercel.app/";
+        $url="http://localhost:4200";
         return  redirect()->to($url);
     }
 
@@ -115,7 +114,7 @@ class backendController extends Controller
     }
 
     public function createAd(Request $request){
-        $ad_data = new Ad_data();
+        $ad_data = new ad_data();
         $ad_data->company_name = $request->company_name;
         $ad_data->ad_tagline = $request->tagline;
         $ad_data->city = $request->city_name;
@@ -220,5 +219,34 @@ class backendController extends Controller
         $result = Ad_data::where('id',$request->ad_id)->update(['imageUrl'=>$path]);
         return Response::json($result);
     }
-    
+    public function updatePersonalProfile(Request $request){
+
+        $result = User::where('id',$request->id)->update
+        (
+            [
+                'name'=>$request->name,
+                'email'=>$request->email,
+                'phone'=>$request->phone
+            ]
+        );        
+        $user= User::where('id', $request->id)->get();
+        return Response::json($user);
+    }
+    public function updateBusinessProfile(Request $request){
+
+        $result = Ad_data::where('id',$request->id)->update
+        (
+            [
+                'company_name'=>$request->company_name,
+                'ad_tagline'=>$request->ad_tagline,
+                'city'=>$request->city,
+                'pincode'=>$request->pincode,
+                'state'=>$request->state,
+                'country'=>$request->country,
+                'address_1'=>$request->address_1
+            ]
+        );        
+        $user= Ad_data::where('id', $request->id)->get();
+        return Response::json($user);
+    }
 }
