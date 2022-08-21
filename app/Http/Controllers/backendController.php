@@ -304,6 +304,12 @@ class backendController extends Controller
     }
     public function resetPassword(Request $request)
     {
+        $user= User::where('id', $request->id)->first();
+        if (!$user || !Hash::check($request->oldPassword, $user->password)) {
+            return response([
+                'message' => ['These credentials do not match our records.']
+            ], 404);
+        }
         $result = User::where('id',$request->id)->update(['password'=>$request->password]);
         return Response::json($result);
     }
