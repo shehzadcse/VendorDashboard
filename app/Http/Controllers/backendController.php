@@ -274,6 +274,7 @@ class backendController extends Controller
             DB::raw("(COUNT(*)) as clicks"),
             DB::raw("to_char(created_at, 'Month') as month_name")
         )
+        ->where('ads_id','=',$request->ad_id)
         ->whereYear('created_at', date('Y'))
         ->groupBy('month_name')
         ->get()
@@ -282,6 +283,7 @@ class backendController extends Controller
         $week_data=Ad_stats::select(
             DB::raw("(COUNT(*)) as count"),
             DB::raw("to_char(created_at, 'Day') as dayname"))
+            ->where('ads_id','=',$request->ad_id)
             ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
             ->whereYear('created_at', date('Y'))
             ->groupBy('dayname')
