@@ -32,3 +32,4 @@ Route::get('get-all-user-ads', [backendController::class, 'getUsersAllAds']);
 Route::get('upload-image', [backendController::class, 'uploadImage']);
 Route::post('update-personal-profile', [backendController::class, 'updatePersonalProfile']);
 Route::post('update-business-profile', [backendController::class, 'updateBusinessProfile']);
+Route::post('search-ads', [backendController::class, 'searchAds']);
