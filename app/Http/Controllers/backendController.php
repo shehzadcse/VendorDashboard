@@ -305,5 +305,6 @@ class backendController extends Controller
     public function resetPassword(Request $request)
     {
         $result = User::where('id',$request->id)->update(['password'=>$request->password]);
+        return Response::json($result);
     }
 }
