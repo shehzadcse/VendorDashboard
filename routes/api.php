@@ -33,3 +33,5 @@ Route::get('upload-image', [backendController::class, 'uploadImage']);
 Route::post('update-personal-profile', [backendController::class, 'updatePersonalProfile']);
 Route::post('update-business-profile', [backendController::class, 'updateBusinessProfile']);
 Route::post('search-ads', [backendController::class, 'searchAds']);
+Route::get('get-ad-stats', [backendController::class, 'getAdStats']);
+Route::get('get-dashboard-data', [backendController::class, 'getDashBoardData']);
