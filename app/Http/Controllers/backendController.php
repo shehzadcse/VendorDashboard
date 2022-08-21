@@ -289,4 +289,14 @@ class backendController extends Controller
         $response['week_data']=$week_data;
         return Response::json($response);
     }
+    public function createAdStats(Request $request)
+    {
+        $data['name']= $request['name'];
+        $data['phone']= $request['phone'];
+        $data['email']= $request['email'];
+        $data['ip']= $request['ip'];
+        $data['ads_id']= $request['ads_id'];
+        $ad_stat = Ad_stats::create($data);
+        return Response::json($ad_stat);
+    }
 }
