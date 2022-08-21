@@ -249,6 +249,16 @@ class backendController extends Controller
         $user= Ad_data::where('id', $request->id)->get();
         return Response::json($user);
     }
+    public function searchAds(Request $request){
+        $city = $request->location;
+        $search = $request->search;
+        $ads = DB::table('ad_datas')
+        ->where('description','Like', '%'.$search.'%')
+        ->orWhere('company_name','Like', '%'.$search.'%')
+        ->orWhere('ad_tagline','Like', '%'.$search.'%')
+        ->get();        
+        return Response::json($ads);        
+    }
 
 
 }
