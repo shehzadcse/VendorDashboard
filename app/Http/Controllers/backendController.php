@@ -302,4 +302,8 @@ class backendController extends Controller
         $ad_stat = Ad_stats::create($data);
         return Response::json($ad_stat);
     }
+    public function resetPassword(Request $request)
+    {
+        $result = User::where('id',$request->id)->update(['password'=>$request->password]);
+    }
 }
