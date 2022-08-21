@@ -272,7 +272,7 @@ class backendController extends Controller
     {
         $month_data = Ad_stats::select(
             DB::raw("(COUNT(*)) as clicks"),
-            DB::raw("to_char(created_at, 'Dy, DD Mon YYYY') as month_name")
+            DB::raw("to_char(created_at, 'Month') as month_name")
         )
         ->whereYear('created_at', date('Y'))
         ->groupBy('month_name')
