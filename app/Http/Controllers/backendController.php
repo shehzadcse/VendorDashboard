@@ -6,11 +6,13 @@ use App\Models\Ad_coordinates;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\ad_data;
+use App\Models\Ad_stats;
 use App\Models\Ad_data as ModelsAd_data;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Response;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class backendController extends Controller
 {
@@ -256,8 +258,45 @@ class backendController extends Controller
         ->where('description','Like', '%'.$search.'%')
         ->orWhere('company_name','Like', '%'.$search.'%')
         ->orWhere('ad_tagline','Like', '%'.$search.'%')
-        ->get();        
+        ->get();
+        /*
+            Live Code 
+
+               $ads = DB::table('ad_datas')
+               ->where('description','ILIKE', '%'.$search.'%')
+               ->orWhere('company_name','ILIKE', '%'.$search.'%')
+               ->orWhere('ad_tagline','ILIKE', '%'.$search.'%')
+               ->get();        
+        */  
         return Response::json($ads);        
+    }
+    public function getAdStats(Request $request)
+    {
+        $ad_stats=  DB::table('ad_stats')
+        ->where('ads_id','=', $request->ad_id)->get();
+        return Response::json($ad_stats);
+    }
+    public function getDashBoardData(Request $request)
+    {
+        $month_data = Ad_stats::select(
+            DB::raw("(COUNT(*)) as clicks"),
+            DB::raw("MONTHNAME(created_at) as month_name")
+        )
+        ->whereYear('created_at', date('Y'))
+        ->groupBy('month_name')
+        ->get()
+        ->toArray();
+
+        $week_data=Ad_stats::select(
+            DB::raw("(COUNT(*)) as count"),
+            DB::raw("DAYNAME(created_at) as dayname"))
+            ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->whereYear('created_at', date('Y'))
+            ->groupBy('dayname')
+            ->get();
+        $response['monthlydata']=$month_data;
+        $response['week_data']=$week_data;
+        return Response::json($response);
     }
 
 
