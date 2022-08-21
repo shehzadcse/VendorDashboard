@@ -124,6 +124,7 @@ class backendController extends Controller
         $ad_data->hblocks = $request->blocksData['hBlocks'];
         $ad_data->wblocks = $request->blocksData['wBlocks'];
         $ad_data->address_1 = $request->addressLine1;
+        $ad_data->description = $request->description;
         $data = User::where('email', $request->email)->first();
         if(!empty($data))
         {           
