@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ad_coordinates;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Models\ad_data;
+use App\Models\Ad_data;
 use App\Models\Ad_stats;
 use App\Models\Ad_data as ModelsAd_data;
 use App\Models\User;
@@ -245,7 +245,8 @@ class backendController extends Controller
                 'pincode'=>$request->pincode,
                 'state'=>$request->state,
                 'country'=>$request->country,
-                'address_1'=>$request->address_1
+                'address_1'=>$request->address_1,
+                'description'=>$request->description
             ]
         );        
         $user= Ad_data::where('id', $request->id)->get();
@@ -255,9 +256,9 @@ class backendController extends Controller
         $city = $request->location;
         $search = $request->search;
         $ads = DB::table('ad_datas')
-        ->where('description','Like', '%'.$search.'%')
-        ->orWhere('company_name','Like', '%'.$search.'%')
-        ->orWhere('ad_tagline','Like', '%'.$search.'%')
+        ->where('description','ILIKE', '%'.$search.'%')
+        ->orWhere('company_name','ILIKE', '%'.$search.'%')
+        ->orWhere('ad_tagline','ILIKE', '%'.$search.'%')
         ->get();        
         return Response::json($ads);        
     }
@@ -271,8 +272,9 @@ class backendController extends Controller
     {
         $month_data = Ad_stats::select(
             DB::raw("(COUNT(*)) as clicks"),
-            DB::raw("MONTHNAME(created_at) as month_name")
+            DB::raw("to_char(created_at, 'Month') as month_name")
         )
+        ->where('ads_id','=',$request->ad_id)
         ->whereYear('created_at', date('Y'))
         ->groupBy('month_name')
         ->get()
@@ -280,7 +282,8 @@ class backendController extends Controller
 
         $week_data=Ad_stats::select(
             DB::raw("(COUNT(*)) as count"),
-            DB::raw("DAYNAME(created_at) as dayname"))
+            DB::raw("to_char(created_at, 'Day') as dayname"))
+            ->where('ads_id','=',$request->ad_id)
             ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
             ->whereYear('created_at', date('Y'))
             ->groupBy('dayname')
