@@ -255,9 +255,9 @@ class backendController extends Controller
         $city = $request->location;
         $search = $request->search;
         $ads = DB::table('ad_datas')
-        ->where('description','Like', '%'.$search.'%')
-        ->orWhere('company_name','Like', '%'.$search.'%')
-        ->orWhere('ad_tagline','Like', '%'.$search.'%')
+        ->where('description','ILIKE', '%'.$search.'%')
+        ->orWhere('company_name','ILIKE', '%'.$search.'%')
+        ->orWhere('ad_tagline','ILIKE', '%'.$search.'%')
         ->get();        
         return Response::json($ads);        
     }
