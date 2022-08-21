@@ -35,3 +35,4 @@ Route::post('update-business-profile', [backendController::class, 'updateBusines
 Route::post('search-ads', [backendController::class, 'searchAds']);
 Route::get('get-ad-stats', [backendController::class, 'getAdStats']);
 Route::get('get-dashboard-data', [backendController::class, 'getDashBoardData']);
+Route::post('create-ad-stats', [backendController::class, 'createAdStats']);

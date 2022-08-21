@@ -258,16 +258,7 @@ class backendController extends Controller
         ->where('description','Like', '%'.$search.'%')
         ->orWhere('company_name','Like', '%'.$search.'%')
         ->orWhere('ad_tagline','Like', '%'.$search.'%')
-        ->get();
-        /*
-            Live Code 
-
-               $ads = DB::table('ad_datas')
-               ->where('description','ILIKE', '%'.$search.'%')
-               ->orWhere('company_name','ILIKE', '%'.$search.'%')
-               ->orWhere('ad_tagline','ILIKE', '%'.$search.'%')
-               ->get();        
-        */  
+        ->get();        
         return Response::json($ads);        
     }
     public function getAdStats(Request $request)
@@ -299,5 +290,14 @@ class backendController extends Controller
         return Response::json($response);
     }
 
-
+    public function createAdStats(Request $request)
+    {
+        $data['name']= $request['name'];
+        $data['phone']= $request['phone'];
+        $data['email']= $request['email'];
+        $data['ip']= $request['ip'];
+        $data['ads_id']= $request['ads_id'];
+        $ad_stat = Ad_stats::create($data);
+        return Response::json($ad_stat);
+    }
 }
