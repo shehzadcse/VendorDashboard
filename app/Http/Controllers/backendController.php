@@ -281,7 +281,7 @@ class backendController extends Controller
 
         $week_data=Ad_stats::select(
             DB::raw("(COUNT(*)) as count"),
-            DB::raw("DAYNAME(created_at) as dayname"))
+            DB::raw("to_char(created_at, 'Day') as dayname"))
             ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
             ->whereYear('created_at', date('Y'))
             ->groupBy('dayname')
