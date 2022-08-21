@@ -310,7 +310,7 @@ class backendController extends Controller
                 'message' => ['These credentials do not match our records.']
             ], 404);
         }
-        $result = User::where('id',$request->id)->update(['password'=>$request->password]);
+        $result = User::where('id',$request->id)->update(['password'=>Hash::make($request->password)]);
         return Response::json($result);
     }
 }
