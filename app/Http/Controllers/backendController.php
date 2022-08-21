@@ -244,7 +244,8 @@ class backendController extends Controller
                 'pincode'=>$request->pincode,
                 'state'=>$request->state,
                 'country'=>$request->country,
-                'address_1'=>$request->address_1
+                'address_1'=>$request->address_1,
+                'description'=>$request->description
             ]
         );        
         $user= Ad_data::where('id', $request->id)->get();
