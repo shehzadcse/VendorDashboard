@@ -271,11 +271,9 @@ class backendController extends Controller
     public function getDashBoardData(Request $request)
     {
         $total_clicks = Ad_stats::select(
-            DB::raw("(COUNT(*)) as clicks"),
-            DB::raw("email")
+            DB::raw("(COUNT(*)) as clicks")
         )
         ->where('ads_id','=',$request->ad_id)
-        ->distinct()
         ->get();
 
 
