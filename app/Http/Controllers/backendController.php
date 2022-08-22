@@ -270,6 +270,13 @@ class backendController extends Controller
     }
     public function getDashBoardData(Request $request)
     {
+        $total_clicks = Ad_stats::select(
+            DB::raw("(COUNT(*)) as clicks")
+        )
+        ->where('ads_id','=',$request->ad_id)
+        ->get();
+
+
         $month_data = Ad_stats::select(
             DB::raw("(COUNT(*)) as clicks"),
             DB::raw("to_char(created_at, 'Month') as month_name")
@@ -290,6 +297,7 @@ class backendController extends Controller
             ->get();
         $response['monthlydata']=$month_data;
         $response['week_data']=$week_data;
+        $response['total_clicks']=$total_clicks;
         return Response::json($response);
     }
     public function createAdStats(Request $request)
