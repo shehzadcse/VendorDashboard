@@ -228,7 +228,8 @@ class backendController extends Controller
             [
                 'name'=>$request->name,
                 'email'=>$request->email,
-                'phone'=>$request->phone
+                'phone'=>$request->phone,
+                'alt_email'=>$request->alt_email,
             ]
         );        
         $user= User::where('id', $request->id)->get();
