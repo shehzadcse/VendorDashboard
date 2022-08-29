@@ -126,6 +126,7 @@ class backendController extends Controller
         $ad_data->hblocks = $request->blocksData['hBlocks'];
         $ad_data->wblocks = $request->blocksData['wBlocks'];
         $ad_data->address_1 = $request->addressLine1;
+        $ad_data->tags = isset($request->tags)?$request->tags:null;
         $data = User::where('email', $request->email)->first();
         if(!empty($data))
         {           
@@ -236,7 +237,10 @@ class backendController extends Controller
         return Response::json($user);
     }
     public function updateBusinessProfile(Request $request){
-
+        $tagsString = '';
+        foreach ($request->tags as $value) {
+            $tagsString .=$value.',';
+        }
         $result = Ad_data::where('id',$request->id)->update
         (
             [
@@ -247,7 +251,8 @@ class backendController extends Controller
                 'state'=>$request->state,
                 'country'=>$request->country,
                 'address_1'=>$request->address_1,
-                'description'=>$request->description
+                'description'=>$request->description,
+                'tags'=>$tagsString
             ]
         );        
         $user= Ad_data::where('id', $request->id)->get();
@@ -256,11 +261,20 @@ class backendController extends Controller
     public function searchAds(Request $request){
         $city = $request->location;
         $search = $request->search;
-        $ads = DB::table('ad_datas')
-        ->where('description','ILIKE', '%'.$search.'%')
-        ->orWhere('company_name','ILIKE', '%'.$search.'%')
-        ->orWhere('ad_tagline','ILIKE', '%'.$search.'%')
-        ->get();        
+        // $ads = DB::table('ad_datas')
+        // ->where('description','ILIKE', '%'.$search.'%')
+        // ->orWhere('company_name','ILIKE', '%'.$search.'%')
+        // ->orWhere('ad_tagline','ILIKE', '%'.$search.'%')
+        // ->orWhere('ad_tagline','ILIKE', '%'.$search.'%')
+        // ->get();     
+        
+            $ads = DB::table('ad_datas')
+            ->where('description','LIKE', '%'.$search.'%')
+            ->orWhere('company_name','LIKE', '%'.$search.'%')
+            ->orWhere('ad_tagline','LIKE', '%'.$search.'%')
+            ->orWhere('tags','LIKE', '%'.$search.'%')
+            ->get();  
+        
         return Response::json($ads);        
     }
     public function getAdStats(Request $request)
