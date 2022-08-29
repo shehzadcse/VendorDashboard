@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Response;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class backendController extends Controller
 {
@@ -129,14 +130,15 @@ class backendController extends Controller
         $ad_data->tags = isset($request->tags)?$request->tags:null;
         $data = User::where('email', $request->email)->first();
         if(!empty($data))
-        {           
+        {
             if($data->count()<0)
             {
                 $new_user = new User();
                 $new_user->name = isset($request->name)?$request->name:null;
                 $new_user->phone = isset($request->phone)?$request->phone:null;
                 $new_user->email = $request->email;
-                $new_user->password = Hash::make('@Virus969');
+                $randomPassword = Str::random(10);
+                $new_user->password = Hash::make($randomPassword);
                 $result = $new_user->save();
                 if($result){
                     $response = User::where('email', $request->email)->first();
@@ -158,7 +160,8 @@ class backendController extends Controller
             $new_user->name = isset($request->name)?$request->name:null;
             $new_user->phone = isset($request->phone)?$request->phone:null;
             $new_user->email = $request->email;
-            $new_user->password = Hash::make('@Virus969');
+            $randomPassword = Str::random(10);
+            $new_user->password = Hash::make($randomPassword);
             $result = $new_user->save();
             if($result)
             {
