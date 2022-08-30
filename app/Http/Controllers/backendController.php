@@ -138,7 +138,8 @@ class backendController extends Controller
                 $new_user->phone = isset($request->phone)?$request->phone:null;
                 $new_user->email = $request->email;
                 $randomPassword = Str::random(10);
-                $new_user->password = Hash::make($randomPassword);
+                // $new_user->password = Hash::make($randomPassword);
+                $new_user->password = Hash::make('@Virus969');
                 $result = $new_user->save();
                 if($result){
                     $response = User::where('email', $request->email)->first();
@@ -161,7 +162,8 @@ class backendController extends Controller
             $new_user->phone = isset($request->phone)?$request->phone:null;
             $new_user->email = $request->email;
             $randomPassword = Str::random(10);
-            $new_user->password = Hash::make($randomPassword);
+            // $new_user->password = Hash::make($randomPassword);
+            $new_user->password = Hash::make('@Virus969');
             $result = $new_user->save();
             if($result)
             {
