@@ -22,6 +22,7 @@ class Ad_data extends Model
        'country',
        'hblocks',
        'wblocks',
+       'tags',
        'created_at',
        'updated_at',
     ];
