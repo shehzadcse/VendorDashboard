@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
+use Mail;
+use App\Mail\NewUserMail;
+
 class backendController extends Controller
 {
 
@@ -138,9 +141,18 @@ class backendController extends Controller
                 $new_user->phone = isset($request->phone)?$request->phone:null;
                 $new_user->email = $request->email;
                 $randomPassword = Str::random(10);
-                // $new_user->password = Hash::make($randomPassword);
-                $new_user->password = Hash::make('@Virus969');
+                $new_user->password = Hash::make($randomPassword);
+                // $new_user->password = Hash::make('@Virus969');
                 $result = $new_user->save();
+
+                $viewData['name']=$new_user->name;
+                $viewData['companyName']='Germa Software';
+                $viewData['password']=$randomPassword;
+                $viewData['email']= $new_user->email;
+               
+               
+                \Mail::to($viewData['email'])->send(new \App\Mail\NewUserMail($viewData));
+
                 if($result){
                     $response = User::where('email', $request->email)->first();
                 $ad_data->user_id =  $response->id;
@@ -162,9 +174,18 @@ class backendController extends Controller
             $new_user->phone = isset($request->phone)?$request->phone:null;
             $new_user->email = $request->email;
             $randomPassword = Str::random(10);
-            // $new_user->password = Hash::make($randomPassword);
-            $new_user->password = Hash::make('@Virus969');
+            $new_user->password = Hash::make($randomPassword);
+            // $new_user->password = Hash::make('@Virus969');
             $result = $new_user->save();
+            
+            $viewData['name']=$new_user->name;
+            $viewData['companyName']='Germa Software';
+            $viewData['password']=$randomPassword;
+            $viewData['email']= $new_user->email;
+           
+           
+            \Mail::to($viewData['email'])->send(new \App\Mail\NewUserMail($viewData));
+           
             if($result)
             {
                 $response = User::where('email', $request->email)->first();
