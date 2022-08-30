@@ -247,6 +247,7 @@ class backendController extends Controller
                 'state'=>$request->state,
                 'country'=>$request->country,
                 'address_1'=>$request->address_1,
+                'tags'=>$request->tags,
                 'description'=>$request->description
             ]
         );        
