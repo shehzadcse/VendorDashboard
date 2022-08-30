@@ -259,6 +259,7 @@ class backendController extends Controller
         $search = $request->search;
         $ads = DB::table('ad_datas')
         ->where('description','ILIKE', '%'.$search.'%')
+        ->orWhere('tags','ILIKE', '%'.$search.'%')
         ->orWhere('company_name','ILIKE', '%'.$search.'%')
         ->orWhere('ad_tagline','ILIKE', '%'.$search.'%')
         ->get();        
