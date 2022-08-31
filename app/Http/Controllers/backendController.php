@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ad_coordinates;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+
 use App\Models\Ad_data;
 use App\Models\Ad_stats;
 use App\Models\Ad_data as ModelsAd_data;
@@ -13,6 +14,10 @@ use Illuminate\Support\Facades\Hash;
 use Response;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
+
+use Mail;
+use App\Mail\NewUserMail;
 
 class backendController extends Controller
 {
@@ -126,17 +131,29 @@ class backendController extends Controller
         $ad_data->hblocks = $request->blocksData['hBlocks'];
         $ad_data->wblocks = $request->blocksData['wBlocks'];
         $ad_data->address_1 = $request->addressLine1;
+        $ad_data->tags = isset($request->tags)?$request->tags:null;
         $data = User::where('email', $request->email)->first();
         if(!empty($data))
-        {           
+        {
             if($data->count()<0)
             {
                 $new_user = new User();
                 $new_user->name = isset($request->name)?$request->name:null;
                 $new_user->phone = isset($request->phone)?$request->phone:null;
                 $new_user->email = $request->email;
-                $new_user->password = Hash::make('@Virus969');
+                $randomPassword = Str::random(10);
+                $new_user->password = Hash::make($randomPassword);
+                // $new_user->password = Hash::make('@Virus969');
                 $result = $new_user->save();
+
+                $viewData['name']=$new_user->name;
+                $viewData['companyName']='Germa Software';
+                $viewData['password']=$randomPassword;
+                $viewData['email']= $new_user->email;
+               
+               
+                \Mail::to($viewData['email'])->send(new \App\Mail\NewUserMail($viewData));
+
                 if($result){
                     $response = User::where('email', $request->email)->first();
                 $ad_data->user_id =  $response->id;
@@ -157,8 +174,19 @@ class backendController extends Controller
             $new_user->name = isset($request->name)?$request->name:null;
             $new_user->phone = isset($request->phone)?$request->phone:null;
             $new_user->email = $request->email;
-            $new_user->password = Hash::make('@Virus969');
+            $randomPassword = Str::random(10);
+            $new_user->password = Hash::make($randomPassword);
+            // $new_user->password = Hash::make('@Virus969');
             $result = $new_user->save();
+            
+            $viewData['name']=$new_user->name;
+            $viewData['companyName']='Germa Software';
+            $viewData['password']=$randomPassword;
+            $viewData['email']= $new_user->email;
+           
+           
+            \Mail::to($viewData['email'])->send(new \App\Mail\NewUserMail($viewData));
+           
             if($result)
             {
                 $response = User::where('email', $request->email)->first();
@@ -257,12 +285,14 @@ class backendController extends Controller
     public function searchAds(Request $request){
         $city = $request->location;
         $search = $request->search;
+
         $ads = DB::table('ad_datas')
         ->where('description','ILIKE', '%'.$search.'%')
         ->orWhere('tags','ILIKE', '%'.$search.'%')
         ->orWhere('company_name','ILIKE', '%'.$search.'%')
         ->orWhere('ad_tagline','ILIKE', '%'.$search.'%')
         ->get();        
+
         return Response::json($ads);        
     }
     public function getAdStats(Request $request)
@@ -280,6 +310,7 @@ class backendController extends Controller
         ->get();
 
 
+
         $month_data = Ad_stats::select(
             DB::raw("(COUNT(*)) as clicks"),
             DB::raw("to_char(created_at, 'Month') as month_name")
@@ -292,6 +323,7 @@ class backendController extends Controller
 
         $week_data=Ad_stats::select(
             DB::raw("(COUNT(*)) as count"),
+
             DB::raw("to_char(created_at, 'Day') as dayname"))
             ->where('ads_id','=',$request->ad_id)
             ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
@@ -303,6 +335,8 @@ class backendController extends Controller
         $response['total_clicks']=$total_clicks;
         return Response::json($response);
     }
+
+
     public function createAdStats(Request $request)
     {
         $data['name']= $request['name'];
@@ -324,4 +358,4 @@ class backendController extends Controller
         $result = User::where('id',$request->id)->update(['password'=>Hash::make($request->password)]);
         return Response::json($result);
     }
-}
+
