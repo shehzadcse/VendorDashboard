@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Ad_coordinates;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Models\ad_data;
+
+use App\Models\Ad_data;
 use App\Models\Ad_stats;
 use App\Models\Ad_data as ModelsAd_data;
 use App\Models\User;
@@ -263,10 +264,7 @@ class backendController extends Controller
         return Response::json($user);
     }
     public function updateBusinessProfile(Request $request){
-        $tagsString = '';
-        foreach ($request->tags as $value) {
-            $tagsString .=$value.',';
-        }
+
         $result = Ad_data::where('id',$request->id)->update
         (
             [
@@ -277,8 +275,8 @@ class backendController extends Controller
                 'state'=>$request->state,
                 'country'=>$request->country,
                 'address_1'=>$request->address_1,
-                'description'=>$request->description,
-                'tags'=>$tagsString
+                'tags'=>$request->tags,
+                'description'=>$request->description
             ]
         );        
         $user= Ad_data::where('id', $request->id)->get();
@@ -287,20 +285,14 @@ class backendController extends Controller
     public function searchAds(Request $request){
         $city = $request->location;
         $search = $request->search;
-        // $ads = DB::table('ad_datas')
-        // ->where('description','ILIKE', '%'.$search.'%')
-        // ->orWhere('company_name','ILIKE', '%'.$search.'%')
-        // ->orWhere('ad_tagline','ILIKE', '%'.$search.'%')
-        // ->orWhere('ad_tagline','ILIKE', '%'.$search.'%')
-        // ->get();     
-        
-            $ads = DB::table('ad_datas')
-            ->where('description','LIKE', '%'.$search.'%')
-            ->orWhere('company_name','LIKE', '%'.$search.'%')
-            ->orWhere('ad_tagline','LIKE', '%'.$search.'%')
-            ->orWhere('tags','LIKE', '%'.$search.'%')
-            ->get();  
-        
+
+        $ads = DB::table('ad_datas')
+        ->where('description','ILIKE', '%'.$search.'%')
+        ->orWhere('tags','ILIKE', '%'.$search.'%')
+        ->orWhere('company_name','ILIKE', '%'.$search.'%')
+        ->orWhere('ad_tagline','ILIKE', '%'.$search.'%')
+        ->get();        
+
         return Response::json($ads);        
     }
     public function getAdStats(Request $request)
@@ -316,10 +308,14 @@ class backendController extends Controller
         )
         ->where('ads_id','=',$request->ad_id)
         ->get();
+
+
+
         $month_data = Ad_stats::select(
             DB::raw("(COUNT(*)) as clicks"),
-            DB::raw("MONTHNAME(created_at) as month_name")
+            DB::raw("to_char(created_at, 'Month') as month_name")
         )
+        ->where('ads_id','=',$request->ad_id)
         ->whereYear('created_at', date('Y'))
         ->groupBy('month_name')
         ->get()
@@ -327,7 +323,9 @@ class backendController extends Controller
 
         $week_data=Ad_stats::select(
             DB::raw("(COUNT(*)) as count"),
-            DB::raw("DAYNAME(created_at) as dayname"))
+
+            DB::raw("to_char(created_at, 'Day') as dayname"))
+            ->where('ads_id','=',$request->ad_id)
             ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
             ->whereYear('created_at', date('Y'))
             ->groupBy('dayname')
@@ -338,38 +336,6 @@ class backendController extends Controller
         return Response::json($response);
     }
 
-    // public function getDashBoardData(Request $request)
-    // {
-    //     $total_clicks = Ad_stats::select(
-    //         DB::raw("(COUNT(*)) as clicks")
-    //     )
-    //     ->where('ads_id','=',$request->ad_id)
-    //     ->get();
-
-
-    //     $month_data = Ad_stats::select(
-    //         DB::raw("(COUNT(*)) as clicks"),
-    //         DB::raw("to_char(created_at, 'Month') as month_name")
-    //     )
-    //     ->where('ads_id','=',$request->ad_id)
-    //     ->whereYear('created_at', date('Y'))
-    //     ->groupBy('month_name')
-    //     ->get()
-    //     ->toArray();
-
-    //     $week_data=Ad_stats::select(
-    //         DB::raw("(COUNT(*)) as count"),
-    //         DB::raw("to_char(created_at, 'Day') as dayname"))
-    //         ->where('ads_id','=',$request->ad_id)
-    //         ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
-    //         ->whereYear('created_at', date('Y'))
-    //         ->groupBy('dayname')
-    //         ->get();
-    //     $response['monthlydata']=$month_data;
-    //     $response['week_data']=$week_data;
-    //     $response['total_clicks']=$total_clicks;
-    //     return Response::json($response);
-    // }
 
     public function createAdStats(Request $request)
     {
@@ -393,4 +359,3 @@ class backendController extends Controller
         return Response::json($result);
     }
 
-}

@@ -1,0 +1,28 @@
+heroku config:add APP_NAME=Laravel
+heroku config:add APP_ENV=production
+heroku config:add APP_URL=https://ads-proj-laravel.herokuapp.com/
+
+heroku config:add DB_CONNECTION=pgsql
+heroku config:add DB_HOST=ec2-44-205-64-253.compute-1.amazonaws.com
+heroku config:add DB_PORT=5432
+heroku config:add DB_DATABASE=d2j0hheddiagap
+heroku config:add DB_USERNAME=jndxcuroigctww
+heroku config:add DB_PASSWORD=57082efba6fbf1d330586b6d793cb5f1e8e6555b3d3cb601ecabf83e88a0085e
+
+
+
+heroku config:add AWS_ACCESS_KEY_ID=AKIARJORWFABPIVIE3K4
+heroku config:add AWS_SECRET_ACCESS_KEY=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
+heroku config:add AWS_DEFAULT_REGION=ap-south-1
+heroku config:add AWS_BUCKET='ads-project-kolkata'
+heroku config:add AWS_USE_PATH_STYLE_ENDPOINT=false
+heroku config:add FILESYSTEM_DRIVER=s3
+
+heroku config:add MAIL_MAILER=smtp
+heroku config:add MAIL_HOST=mailhog
+heroku config:add MAIL_PORT=1025
+heroku config:add MAIL_USERNAME=null
+heroku config:add MAIL_PASSWORD=null
+heroku config:add MAIL_ENCRYPTION=null
+heroku config:add MAIL_FROM_ADDRESS=null
+heroku config:add MAIL_FROM_NAME=Laravel 

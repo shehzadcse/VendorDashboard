@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Models\ad_data;
+use App\Models\Ad_data;
 class FrontendController extends Controller
 {
     public function bussiness_profile(){
