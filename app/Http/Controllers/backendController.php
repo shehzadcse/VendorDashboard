@@ -367,7 +367,7 @@ class backendController extends Controller
     //         ->get();
     //     $response['monthlydata']=$month_data;
     //     $response['week_data']=$week_data;
-    //     $response['total_clicks']=$total_clicks;
+    //     $response['total_clicks']=$total_clicks; 
     //     return Response::json($response);
     // }
 
