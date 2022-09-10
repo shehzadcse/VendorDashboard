@@ -392,9 +392,6 @@ class backendController extends Controller
         return Response::json($result);
     }
 
-<<<<<<< HEAD
-}
-=======
     public function ValidateEmail(Request $request)
     {
         // $otps = DB::table('otp_masters')
@@ -431,4 +428,3 @@ class backendController extends Controller
     }
 
 }
->>>>>>> c653adb4c1d7ce822dcc37c154b5ec85051ec6e9
