@@ -401,7 +401,6 @@ class backendController extends Controller
         // ->where('status', '=', 'active')
         // ->where('operation', '=', $request['operation'])
         // ->get()->toArray();     
-         isset($request->tags)?$request->tags:null;
         $data['user_id']= isset($request['user_id'])?$request['user_id']:null;;
         $data['otp']= random_int(100000, 999999);
         $data['phone']= isset($request['phone'])?$request['phone']:null;;
