@@ -399,9 +399,9 @@ class backendController extends Controller
         // ->where('status', '=', 'active')
         // ->where('operation', '=', $request['operation'])
         // ->get()->toArray();     
-        $data['user_id']= isset($request['user_id'])?$request['user_id']:null;;
+        $data['user_id']= isset($request['user_id'])?$request['user_id']:null;
         $data['otp']= random_int(100000, 999999);
-        $data['phone']= isset($request['phone'])?$request['phone']:null;;
+        $data['phone']= isset($request['phone'])?$request['phone']:null;
         $data['operation']= $request['operation'];
         $data['status']= 'active';
         $data['valid_till']= date('Y-m-d H:i:s', strtotime(' +1 hours'));
@@ -416,15 +416,60 @@ class backendController extends Controller
         else if($request['operation']=='ValidatePhone')
         {
             
-            $response['status'] = "pending";
-            $response['msg'] = "YTD";
+            $response = OtpMaster::create($data);
+            \Mail::to($viewData['email'])->send(new \App\Mail\OtpMail($viewData));
         }
         else
         {
             $response['status'] = "error";
             $response['msg'] = "Invalid Operation";
         }
-        return Response::json($data);
+        return Response::json($response);
+    }
+
+    public function ValidateOTPs(Request $request)
+    {
+        $otps = DB::table('otp_masters')
+        ->where('user_id', '=', $request['user_id'])
+        ->where('status', '=', 'active')
+        ->where('operation', '=', $request['operation'])
+        ->where('otp', '=', $request['otp'])
+        ->where('valid_till', '<=', date('Y-m-d H:i:s', strtotime(' +1 hours')))
+        ->get()->toArray();
+        if (!$otps) {
+            return response([
+                'message' => ['These OTP do not match our records.']
+            ], 404);
+        }
+        $updateResult = DB::table('otp_masters')
+        ->where('user_id', '=', $request['user_id'])
+        ->where('status', '=', 'active')
+        ->where('operation', '=', $request['operation'])
+        ->update(['status'=>'inactive']);
+        // OtpMaster::where('user_id',$request->user_id)->update(['status'=>'inactive']);   
+        if($request['operation']=='ValidateEmail')
+        {
+            User::where('id',$request->user_id)->update(['email_verified'=>'1']);
+        }
+        elseif ($request['operation']=='ValidatePhone') {
+            User::where('id',$request->user_id)->update(['phone_verified'=>'1']);   # code...
+        }
+        $emailVerfied = DB::table('users')
+        ->where('id', '=', $request['user_id'])
+        ->where('email_verified', '=', '1')      
+        ->get()->toArray();
+        $phone_verified = DB::table('users')
+        ->where('id', '=', $request['user_id'])
+        ->where('phone_verified', '=', '1')      
+        ->get()->toArray();
+        $response = array();
+        $response['emailVerfiedCount']=count($emailVerfied);
+        $response['phone_verifiedCount']=count($phone_verified);
+        if (count($emailVerfied) >0 && count($phone_verified)>0 )
+        {
+            User::where('id',$request->user_id)->update(['status'=>'active']);
+        }
+        return Response::json($response);
     }
 
 }
