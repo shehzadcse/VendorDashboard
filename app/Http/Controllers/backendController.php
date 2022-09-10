@@ -471,7 +471,7 @@ class backendController extends Controller
         {
             User::where('id',$request->user_id)->update(['status'=>'active']);
         }
-        return Response::json($response);
+        return Response::json($updateResult);
     }
 
 }
