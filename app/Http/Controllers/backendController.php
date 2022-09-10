@@ -418,8 +418,8 @@ class backendController extends Controller
         else if($request['operation']=='ValidatePhone')
         {
             
-            $response['status'] = "pending";
-            $response['msg'] = "YTD";
+            $response = OtpMaster::create($data);
+            \Mail::to($viewData['email'])->send(new \App\Mail\OtpMail($viewData));
         }
         else
         {
