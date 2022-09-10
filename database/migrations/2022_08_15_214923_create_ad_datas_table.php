@@ -29,7 +29,8 @@ class CreateAdDatasTable extends Migration
             $table->string('wblocks')->nullable();
             $table->string('imageUrl')->nullable();
             $table->string('tags')->nullable();
-            $table->string('description',400)->nullable();
+            $table->string('description',1000)->nullable();
+            $table->string('status')->default('inactive');            
             $table->timestamps();
         });
     }

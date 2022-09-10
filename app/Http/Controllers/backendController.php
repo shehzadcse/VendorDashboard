@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\ad_data;
 use App\Models\Ad_stats;
+use App\Models\OtpMaster;
 use App\Models\Ad_data as ModelsAd_data;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -391,6 +392,42 @@ class backendController extends Controller
         }
         $result = User::where('id',$request->id)->update(['password'=>Hash::make($request->password)]);
         return Response::json($result);
+    }
+
+    public function ValidateEmail(Request $request)
+    {
+        // $otps = DB::table('otp_masters')
+        // ->where('user_id', '=', $request['user_id'])
+        // ->where('status', '=', 'active')
+        // ->where('operation', '=', $request['operation'])
+        // ->get()->toArray();     
+         isset($request->tags)?$request->tags:null;
+        $data['user_id']= isset($request['user_id'])?$request['user_id']:null;;
+        $data['otp']= random_int(100000, 999999);
+        $data['phone']= isset($request['phone'])?$request['phone']:null;;
+        $data['operation']= $request['operation'];
+        $data['status']= 'active';
+        $data['valid_till']= date('Y-m-d H:i:s', strtotime(' +1 hours'));
+        $viewData['name']=  $request->name;
+        $viewData['otp']= $data['otp'];
+        $viewData['email']=  isset($request['email'])?$request['email']:null;
+        if($request['operation']=='ValidateEmail')
+        {
+            $response = OtpMaster::create($data);
+            \Mail::to($viewData['email'])->send(new \App\Mail\OtpMail($viewData));
+        }
+        else if($request['operation']=='ValidatePhone')
+        {
+            
+            $response['status'] = "pending";
+            $response['msg'] = "YTD";
+        }
+        else
+        {
+            $response['status'] = "error";
+            $response['msg'] = "Invalid Operation";
+        }
+        return Response::json($data);
     }
 
 }

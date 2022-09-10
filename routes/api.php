@@ -37,3 +37,4 @@ Route::get('get-ad-stats', [backendController::class, 'getAdStats']);
 Route::get('get-dashboard-data', [backendController::class, 'getDashBoardData']);
 Route::post('create-ad-stats', [backendController::class, 'createAdStats']);
 Route::post('reset-password', [backendController::class, 'resetPassword']);
+Route::post('validate-data', [backendController::class, 'ValidateEmail']);
