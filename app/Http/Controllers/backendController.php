@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Models\Ad_data;
 use App\Models\Ad_stats;
+use App\Models\OtpMaster;
 use App\Models\Ad_data as ModelsAd_data;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -336,6 +337,38 @@ class backendController extends Controller
         return Response::json($response);
     }
 
+    // public function getDashBoardData(Request $request)
+    // {
+    //     $total_clicks = Ad_stats::select(
+    //         DB::raw("(COUNT(*)) as clicks")
+    //     )
+    //     ->where('ads_id','=',$request->ad_id)
+    //     ->get();
+
+
+    //     $month_data = Ad_stats::select(
+    //         DB::raw("(COUNT(*)) as clicks"),
+    //         DB::raw("to_char(created_at, 'Month') as month_name")
+    //     )
+    //     ->where('ads_id','=',$request->ad_id)
+    //     ->whereYear('created_at', date('Y'))
+    //     ->groupBy('month_name')
+    //     ->get()
+    //     ->toArray();
+
+    //     $week_data=Ad_stats::select(
+    //         DB::raw("(COUNT(*)) as count"),
+    //         DB::raw("to_char(created_at, 'Day') as dayname"))
+    //         ->where('ads_id','=',$request->ad_id)
+    //         ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+    //         ->whereYear('created_at', date('Y'))
+    //         ->groupBy('dayname')
+    //         ->get();
+    //     $response['monthlydata']=$month_data;
+    //     $response['week_data']=$week_data;
+    //     $response['total_clicks']=$total_clicks; 
+    //     return Response::json($response);
+    // }
 
     public function createAdStats(Request $request)
     {
@@ -359,4 +392,43 @@ class backendController extends Controller
         return Response::json($result);
     }
 
+<<<<<<< HEAD
 }
+=======
+    public function ValidateEmail(Request $request)
+    {
+        // $otps = DB::table('otp_masters')
+        // ->where('user_id', '=', $request['user_id'])
+        // ->where('status', '=', 'active')
+        // ->where('operation', '=', $request['operation'])
+        // ->get()->toArray();     
+        $data['user_id']= isset($request['user_id'])?$request['user_id']:null;;
+        $data['otp']= random_int(100000, 999999);
+        $data['phone']= isset($request['phone'])?$request['phone']:null;;
+        $data['operation']= $request['operation'];
+        $data['status']= 'active';
+        $data['valid_till']= date('Y-m-d H:i:s', strtotime(' +1 hours'));
+        $viewData['name']=  $request->name;
+        $viewData['otp']= $data['otp'];
+        $viewData['email']=  isset($request['email'])?$request['email']:null;
+        if($request['operation']=='ValidateEmail')
+        {
+            $response = OtpMaster::create($data);
+            \Mail::to($viewData['email'])->send(new \App\Mail\OtpMail($viewData));
+        }
+        else if($request['operation']=='ValidatePhone')
+        {
+            
+            $response['status'] = "pending";
+            $response['msg'] = "YTD";
+        }
+        else
+        {
+            $response['status'] = "error";
+            $response['msg'] = "Invalid Operation";
+        }
+        return Response::json($data);
+    }
+
+}
+>>>>>>> c653adb4c1d7ce822dcc37c154b5ec85051ec6e9
