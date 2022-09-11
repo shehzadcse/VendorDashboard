@@ -470,6 +470,7 @@ class backendController extends Controller
         if (count($emailVerfied) >0 && count($phone_verified)>0 )
         {
             User::where('id',$request->user_id)->update(['status'=>'active']);
+            Ad_data::where('user_id',$request->user_id)->update(['status'=>'active']);
         }
         return Response::json($updateResult);
     }
