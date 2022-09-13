@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\backendController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\ManageUserController;
+use App\Http\Controllers\ManageAdsController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +17,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/', [ManageUserController::class, 'index'])->name('home');
 
 
 
@@ -24,7 +28,18 @@ Route::get('/', function () {
 Route::get('bussiness_profile', [FrontendController::class, 'bussiness_profile'])->name('bussiness_profile');
 Route::get('personal_profile', [FrontendController::class, 'personal_profile'])->name('personal_profile');
 
+// Admin Menu Routes 
+Route::get('login', [AdminController::class, 'index'])->name('admin_login');
+Route::post('login', [AdminController::class, 'login'])->name('admin_login_submit');
+Route::get('manageuser', [ManageUserController::class, 'index'])->name('manage_user');
+Route::get('manageads', [ManageAdsController::class, 'index'])->name('manage_ads');
 
+
+// Data Tables Route
+Route::get('users-data', [ManageUserController::class, 'getData'])->name('users-data');
+Route::post('update-status', [ManageUserController::class, 'UpdateStatus'])->name('UpdateStatus');
+Route::get('ads-data', [ManageAdsController::class, 'getData'])->name('ads-data');
+Route::post('update-ad-status', [ManageAdsController::class, 'UpdateStatus'])->name('UpdateAdStatus');
 
 
 

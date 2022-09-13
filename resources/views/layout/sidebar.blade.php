@@ -3,7 +3,7 @@
   <!-- Brand Logo -->
   <a href="" class="brand-link">
     <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-    <span class="brand-text font-weight-light">Vendor Dashboard</span>
+    <span class="brand-text font-weight-light">Admin Panel</span>
   </a>
 
   <!-- Sidebar -->
@@ -77,16 +77,16 @@
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-copy"></i>
             <p>
-              Profile Management
+              Manage User
               <i class="fas fa-angle-left right"></i>
-              <span class="badge badge-info right">2</span>
+              <span class="badge badge-info right">1</span>
             </p>
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{{ route('bussiness_profile') }}" class="nav-link">
+              <a href="{{ route('manage_user') }}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Business Profile</p>
+                <p>All Users</p>
               </a>
             </li>
             {{-- <li class="nav-item">
@@ -144,21 +144,21 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="" class="nav-link">
+              <a href="{{ route('manage_ads') }}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Order History</p>
+                <p>All Ads</p>
               </a>
             </li>       
-            <li class="nav-item">
+            {{-- <li class="nav-item">
               <a href="" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Ad Statistics</p>
               </a>
-            </li>    
+            </li>     --}}
             
           </ul>
         </li>
-        <li class="nav-item">
+        {{-- <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-hammer"></i>
             <p>
@@ -182,8 +182,8 @@
             </li>    
             
           </ul>
-        </li>
-        <li class="nav-item">
+        </li> --}}
+        {{-- <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-hammer"></i>
             <p>
@@ -200,7 +200,7 @@
               </a>
             </li>
           </ul>
-        </li>
+        </li> --}}
         {{-- <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-chart-pie"></i>
