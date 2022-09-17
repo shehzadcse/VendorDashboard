@@ -37,7 +37,8 @@ Route::get('manageads', [ManageAdsController::class, 'index'])->name('manage_ads
 
 // Data Tables Route
 Route::get('users-data', [ManageUserController::class, 'getData'])->name('users-data');
-Route::post('update-status', [ManageUserController::class, 'UpdateStatus'])->name('UpdateStatus');
+Route::post('update-status', [ManageUserController::class, 'UpdateUser'])->name('UpdateStatus');
+Route::get('get-ad-by-id', [ManageUserController::class, 'getAdData'])->name('getUserAdsData');;
 Route::get('ads-data', [ManageAdsController::class, 'getData'])->name('ads-data');
 Route::post('update-ad-status', [ManageAdsController::class, 'UpdateStatus'])->name('UpdateAdStatus');
 
