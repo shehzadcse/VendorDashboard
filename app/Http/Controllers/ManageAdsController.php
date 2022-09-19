@@ -161,11 +161,35 @@ class ManageAdsController extends Controller
 
     }
     public function UpdateStatus(Request $request){
-        $user = \DB::table('ad_datas')->where('id','=',$request->ad_id)->update(['status'=>$request->edit_status]);
+        $data = array();
+        $data['company_name'] = $request->edit_company_name;
+        $data['ad_tagline'] = $request->edit_tagline;
+        $data['address_1'] = $request->edit_address;
+        $data['city'] = $request->edit_city;
+        $data['state'] = $request->edit_state;
+        $data['pincode'] = $request->edit_pincode;
+        $data['status'] = $request->edit_status;
+        $user = \DB::table('ad_datas')->where('id','=',$request->ad_id)->update($data);
         $arrData = \DB::table('ad_datas')->where('id','=',$request->ad_id)->get();
         $response['status']='success';
         $response['data']=$arrData;
         $response['msg']="Record Updated Successfully !";
         return response()->json($response);
+    }
+    public function getAdData(Request $request){
+        // $ads = \DB::table('ad_datas')
+        // ->where('id', '=', $request->id)
+        // ->get();
+        $userData =\DB::table('users')           
+            ->where('id','=', $request->userid)         
+            ->get()->toArray();
+        $ads =\DB::table('ad_datas')           
+            ->where('user_id','=', $request->id)         
+            ->get()->toArray();
+        $response['status']='success';
+        $response['data']['ad_data']=$ads;
+        $response['data']['user_data']=$userData;
+        // $response['msg']="Record Updated Successfully !";
+        return  response()->json($response);
     }
 }

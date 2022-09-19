@@ -45,7 +45,8 @@ Route::group(['middleware' => 'adminauth'], function(){
     Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard');
     Route::get('users-data', [ManageUserController::class, 'getData'])->name('users-data');
     Route::post('update-status', [ManageUserController::class, 'UpdateUser'])->name('UpdateStatus');
-    Route::get('get-ad-by-id', [ManageUserController::class, 'getAdData'])->name('getUserAdsData');;
+    Route::get('get-ad-by-id', [ManageUserController::class, 'getAdData'])->name('getUserAdsData');
+    Route::get('get-ad-data', [ManageAdsController::class, 'getAdData'])->name('getAdsData');
     Route::get('ads-data', [ManageAdsController::class, 'getData'])->name('ads-data');
     Route::post('update-ad-status', [ManageAdsController::class, 'UpdateStatus'])->name('UpdateAdStatus');
     Route::get('create-sub-admin', [AdminController::class, 'createAdmin'])->name('create_admin');

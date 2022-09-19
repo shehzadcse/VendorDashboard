@@ -23,15 +23,13 @@ class AdminController extends Controller
         //         $totalAmount += $data[0]->Total_Price;
         //         # code...
         //     }
-
-            $viewData['TotalAdBlocks'] = 5000;
             // dd($totalAmount);
             $TotalUsers =\DB::table('users')->get()->count();
             $TotalAds =\DB::table('ad_datas')->get()->count();
             $TotalAdStats =\DB::table('ad_stats')->get()->count();
     
     
-            $viewData['TotalAdBlocks'] = $totalAmount;
+            $viewData['TotalAdBlocks'] = 5000;
             $viewData['TotalUsers'] = $TotalUsers;
             $viewData['TotalAds'] = $TotalAds;
             $viewData['TotalAdStats'] = $TotalAdStats;
