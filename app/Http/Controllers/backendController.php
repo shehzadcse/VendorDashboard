@@ -474,5 +474,24 @@ class backendController extends Controller
         }
         return Response::json($updateResult);
     }
+    public function createAdmin(Request $request)
+    {
+
+        $name = isset($request->name)?$request->name:null;
+        $phone = isset($request->phone)?$request->phone:null;
+        $email = isset($request->email)?$request->email:null;
+        $alt_email =  isset($request->alt_email)?$request->alt_email:null;
+        $password =  isset($request->password)?$request->password:null;
+        $type =isset($request->password)?$request->password:null;
+        $response = DB::table('admins')->insert([
+            'name' => $name,
+            'phone' => $phone,
+            'email' => $email,
+            'alt_email' => $alt_email,
+            'password' => Hash::make($password),   
+            'type' => $type,          
+        ]);
+        return Response::json($response);
+    }
 
 }
