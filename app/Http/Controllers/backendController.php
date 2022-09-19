@@ -482,7 +482,7 @@ class backendController extends Controller
         $email = isset($request->email)?$request->email:null;
         $alt_email =  isset($request->alt_email)?$request->alt_email:null;
         $password =  isset($request->password)?$request->password:null;
-        $type =isset($request->password)?$request->password:null;
+        $type =isset($request->password)?$request->type:null;
         $response = DB::table('admins')->insert([
             'name' => $name,
             'phone' => $phone,
