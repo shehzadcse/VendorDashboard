@@ -28,6 +28,14 @@ class AdminSeeder extends Seeder
     public function run()
     {
         //
+        \DB::table('admins')->insert([
+            'name' => 'Shehzad Rana',
+            'phone' => '+91-9265121885',
+            'email' =>   'shehzadcse@yopmail.com',
+            'alt_email' => 'bii@yopmail.com',
+            'password' => Hash::make('@Virus969'),   
+            'type' => 'admin',          
+        ]);
         for ($i=0; $i <5 ; $i++) { 
             \DB::table('admins')->insert([
                 'name' =>  $this->faker->name,
