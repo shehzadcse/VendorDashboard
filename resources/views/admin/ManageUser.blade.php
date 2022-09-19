@@ -302,11 +302,11 @@
                 data: null,
                 render:function name(data,row,type) {
                     if(data.status == "active")
-                    return '<div class="text-center"><button class="btn-sm btn-success" name="statusBtn" data-id='+data.id+' data-status='+data.status+'>'+data.status+'</button></div>';
+                    return '<div class="text-center"><p class="btn-sm btn-success"  data-id='+data.id+' data-status='+data.status+'>'+data.status+'</p></div>';
                     else if(data.status == "inactive")
-                        return '<div class="text-center"><button class="text-center btn-sm btn-warning" name="statusBtn" data-id='+data.id+' data-status='+data.status+'>'+data.status+'</button></div>';
+                        return '<div class="text-center"><p class="text-center btn-sm btn-warning"  data-id='+data.id+' data-status='+data.status+'>'+data.status+'</p></div>';
                     else
-                        return '<div class="text-center"><button class="text-center btn-sm btn-danger"  name="statusBtn" data-id='+data.id+' data-status='+data.status+'>'+data.status+'</button></div>';
+                        return '<div class="text-center"><p class="text-center btn-sm btn-danger"  data-id='+data.id+' data-status='+data.status+'>'+data.status+'</p></div>';
                 }
                },               
                { 
@@ -399,7 +399,7 @@
                 {
                     url: "{{ route('getUserAdsData') }}",
                     type:"get",
-                    data:{id:1},
+                    data:{id:$(this).data("id")},
                     success: function(response)
                     {
                         $('[name=view_status]').val(response.data['user_data'][0].status);    
