@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Faker\Generator;
+// use Faker\Generator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -36,15 +36,15 @@ class AdminSeeder extends Seeder
             'password' => Hash::make('@Virus969'),   
             'type' => 'admin',          
         ]);
-        for ($i=0; $i <5 ; $i++) { 
-            \DB::table('admins')->insert([
-                'name' =>  $this->faker->name,
-                'phone' => '+91-'.rand(1111111111,9999999999),
-                'email' =>   Str::random(10).'@yopmail.com',
-                'alt_email' => Str::random(10).'@yopmail.com',
-                'password' => Hash::make('password'),            
-            ]);
-            # code...
-        }
+        // for ($i=0; $i <5 ; $i++) { 
+        //     \DB::table('admins')->insert([
+        //         'name' =>  $this->faker->name,
+        //         'phone' => '+91-'.rand(1111111111,9999999999),
+        //         'email' =>   Str::random(10).'@yopmail.com',
+        //         'alt_email' => Str::random(10).'@yopmail.com',
+        //         'password' => Hash::make('password'),            
+        //     ]);
+        //     # code...
+        // }
     }
 }
