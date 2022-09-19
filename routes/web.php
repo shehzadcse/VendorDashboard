@@ -17,10 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-Route::get('/', [ManageUserController::class, 'index'])->name('home');
+Route::get('/', function () {
+    return redirect('dashboard');
+});
+// Route::get('/', [ManageUserController::class, 'index'])->name('home');
+// Route::get('/', [AdminController::class, 'index'])->name('home');
 
 
 
@@ -29,17 +30,34 @@ Route::get('bussiness_profile', [FrontendController::class, 'bussiness_profile']
 Route::get('personal_profile', [FrontendController::class, 'personal_profile'])->name('personal_profile');
 
 // Admin Menu Routes 
-Route::get('login', [AdminController::class, 'index'])->name('admin_login');
-Route::post('login', [AdminController::class, 'login'])->name('admin_login_submit');
-Route::get('manageuser', [ManageUserController::class, 'index'])->name('manage_user');
-Route::get('manageads', [ManageAdsController::class, 'index'])->name('manage_ads');
+// Route::get('login', [AdminController::class, 'index'])->name('admin_login');
 
+
+
+Route::get('/login', function () {
+    return view('admin.login');
+})->name('login');
+Route::post('login', [AdminController::class, 'login'])->name('admin_login_submit');
+
+Route::group(['middleware' => 'adminauth'], function(){
+    Route::get('manageuser', [ManageUserController::class, 'index'])->name('manage_user');
+    Route::get('manageads', [ManageAdsController::class, 'index'])->name('manage_ads');
+    Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard');
+    Route::get('users-data', [ManageUserController::class, 'getData'])->name('users-data');
+    Route::post('update-status', [ManageUserController::class, 'UpdateUser'])->name('UpdateStatus');
+    Route::get('get-ad-by-id', [ManageUserController::class, 'getAdData'])->name('getUserAdsData');;
+    Route::get('ads-data', [ManageAdsController::class, 'getData'])->name('ads-data');
+    Route::post('update-ad-status', [ManageAdsController::class, 'UpdateStatus'])->name('UpdateAdStatus');
+    Route::get('create-sub-admin', [AdminController::class, 'createAdmin'])->name('create_admin');
+    Route::get('admin-data', [AdminController::class, 'getData'])->name('admin-data');
+    Route::get('logout', [AdminController::class, 'logout'])->name('logout');
+});
+// Route::get('/dashboard', function () {
+//     return view('welcome');
+// });
 
 // Data Tables Route
-Route::get('users-data', [ManageUserController::class, 'getData'])->name('users-data');
-Route::post('update-status', [ManageUserController::class, 'UpdateStatus'])->name('UpdateStatus');
-Route::get('ads-data', [ManageAdsController::class, 'getData'])->name('ads-data');
-Route::post('update-ad-status', [ManageAdsController::class, 'UpdateStatus'])->name('UpdateAdStatus');
+
 
 
 

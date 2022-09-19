@@ -25,54 +25,65 @@
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
         <div class="row">
-          <div class="col-lg-4 col-6">
+          <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+                <h3>{{$data['TotalAds']}}</h3>
 
                 <p>Total Ads</p>
               </div>
               <div class="icon">
                 <i class="ion ion-bag"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              {{-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
             </div>
           </div>
           <!-- ./col -->
-          <div class="col-lg-4 col-6">
+          <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                <p>Ads Growth</p>
+                {{-- <h3>53<sup style="font-size: 20px">%</sup></h3> --}}
+                <h3>{{$data['TotalAdStats']}}</h3>
+                <p>Total Queries</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              {{-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
             </div>
           </div>
           <!-- ./col -->
         
           <!-- ./col -->
-          <div class="col-lg-4 col-6">
+          <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>65</h3>
-
-                <p>Unique Visitors</p>
+                <h3>Rs. {{$data['TotalAdBlocks']}}</h3>
+                <p>Total Sales</p>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              {{-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
             </div>
           </div>
-          <!-- ./col -->
-        </div>
+          <div class="col-lg-3 col-6">
+
+            <div class="small-box bg-warning">
+            <div class="inner">
+            <h3>{{$data['TotalUsers']}}</h3>
+            <p>Vendor Registrations</p>
+            </div>
+            <div class="icon">
+            <i class="ion ion-person-add"></i>
+            </div>
+            {{-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
+            </div>
+            </div>
+          </div>
         <!-- /.row -->
         <!-- Main row -->
         <div class="row">
@@ -449,7 +460,7 @@
           <section class="col-lg-12 connectedSortable">
 
             <!-- Map card -->
-            <div class="card bg-gradient-primary">
+            {{-- <div class="card bg-gradient-primary">
               <div class="card-header border-0">
                 <h3 class="card-title">
                   <i class="fas fa-map-marker-alt mr-1"></i>
@@ -490,7 +501,7 @@
                 </div>
                 <!-- /.row -->
               </div>
-            </div>
+            </div> --}}
             <!-- /.card -->
 
             <!-- solid sales graph -->
