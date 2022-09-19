@@ -39,3 +39,4 @@ Route::post('create-ad-stats', [backendController::class, 'createAdStats']);
 Route::post('reset-password', [backendController::class, 'resetPassword']);
 Route::post('validate-data', [backendController::class, 'ValidateEmail']);
 Route::post('validate-otp', [backendController::class, 'ValidateOTPs']);
+Route::post('create-admin', [backendController::class, 'createAdmin']);
