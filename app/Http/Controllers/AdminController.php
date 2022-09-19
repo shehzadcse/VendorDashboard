@@ -15,21 +15,21 @@ class AdminController extends Controller
             return redirect('login');  
         }
          $totalAmount = 0;    
-         $TotalAdBlocks =\DB::select( \DB::raw("SELECT `hblocks`*`wblocks`*500 as 'Total_Price'FROM `ad_datas`;"));
-            for ($i=0; $i <count($TotalAdBlocks) ; $i++) { 
-                $data = array($TotalAdBlocks[$i]);
-                // echo "<pre>";
-                // print_r($data[0]->Total_Price);
-                $totalAmount += $data[0]->Total_Price;
-                # code...
-            }
+        //  $TotalAdBlocks =\DB::select( \DB::raw("SELECT  SUM(hblocks)*SUM(wblocks)*500 as 'Total_Price' FROM `ad_datas`;"));
+        //     for ($i=0; $i <count($TotalAdBlocks) ; $i++) { 
+        //         $data = array($TotalAdBlocks[$i]);
+        //         // echo "<pre>";
+        //         // print_r($data[0]->Total_Price);
+        //         $totalAmount += $data[0]->Total_Price;
+        //         # code...
+        //     }
             // dd($totalAmount);
             $TotalUsers =\DB::table('users')->get()->count();
             $TotalAds =\DB::table('ad_datas')->get()->count();
             $TotalAdStats =\DB::table('ad_stats')->get()->count();
     
     
-            $viewData['TotalAdBlocks'] = $totalAmount;
+            $viewData['TotalAdBlocks'] = 5000;
             $viewData['TotalUsers'] = $TotalUsers;
             $viewData['TotalAds'] = $TotalAds;
             $viewData['TotalAdStats'] = $TotalAdStats;
