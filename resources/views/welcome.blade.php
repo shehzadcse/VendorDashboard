@@ -84,6 +84,42 @@
             </div>
             </div>
           </div>
+          {{-- <div class="col-md-12">
+            <div style="width: 600px; margin: auto;">
+              <canvas id="myChart"></canvas>
+            </div>
+          </div> --}}
+          <br/>
+          <br/>
+          <div class="col-md-6" style="margin: auto">           
+            <div class="card card-success">
+               {{-- <div class="card-header">
+                  
+                  <div class="card-tools">
+                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                     <i class="fas fa-minus"></i>
+                     </button>
+                     <button type="button" class="btn btn-tool" data-card-widget="remove">
+                     <i class="fas fa-times"></i>
+                     </button>
+                  </div>
+               </div> --}}
+               <div class="card-body">
+                  <div class="chart">
+                     <div class="chartjs-size-monitor">
+                        <div class="chartjs-size-monitor-expand">
+                           <div class=""></div>
+                        </div>
+                        <div class="chartjs-size-monitor-shrink">
+                           <div class=""></div>
+                        </div>
+                     </div>
+                     <canvas id="myChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 764px;" width="764" height="250" class="chartjs-render-monitor"></canvas>
+                     
+                  </div>
+               </div>
+            </div>
+         </div>
         <!-- /.row -->
         <!-- Main row -->
         <div class="row">
@@ -606,4 +642,61 @@
 
 
  
-  @endsection
+@endsection
+<script
+  src="https://code.jquery.com/jquery-3.6.1.min.js"
+  integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+  crossorigin="anonymous"></script>
+<script>
+  console.log('first')
+  
+  $(document).ready(function() {
+    let labels = [
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+];
+
+    let data = {
+        labels: labels,
+        datasets: [{
+            label: 'Vendor Registrations',
+            backgroundColor: 'rgb(123, 199, 224)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [5, 10, 5, 2, 20, 30, 45],
+        }]
+    };
+
+    let config = {
+        type: 'bar',
+        data: data,
+        options: {}
+    };
+    new Chart(
+    document.getElementById('myChart'),
+    config
+  );
+  data = {
+        labels: labels,
+        datasets: [{
+            label: 'Ads Generated',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [0, 10, 5, 2, 20, 30, 45],
+        }]
+    };
+  config = {
+        type: 'bar',
+        data: data,
+        options: {}
+    };
+    new Chart(
+    document.getElementById('myChart2'),
+    config
+  );
+
+});
+</script>
