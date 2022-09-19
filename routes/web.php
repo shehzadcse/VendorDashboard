@@ -35,7 +35,7 @@ Route::get('personal_profile', [FrontendController::class, 'personal_profile'])-
 
 
 Route::get('/login', function () {
-    return view('admin.login');
+    return view('admin.Login');
 })->name('login');
 Route::post('login', [AdminController::class, 'login'])->name('admin_login_submit');
 
