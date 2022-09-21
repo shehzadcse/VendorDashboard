@@ -271,14 +271,13 @@
             timer: 3000
         });
         var userTable = $('#userTable').DataTable({
-            dom:'Bfrtip',
            processing: true,
+           scrollY: "500px",
            serverSide: true,
            order: [[ 0, "desc" ]],
            ajax: "{{ url('users-data') }}",
-           responsive: true, 
-           lengthChange: false, 
            autoWidth: false,
+           
            columns: [
                { data: 'id' },
                { data: 'name' },
