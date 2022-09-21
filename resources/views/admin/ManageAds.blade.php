@@ -249,13 +249,12 @@
             timer: 3000
         });
         var adsTable = $('#adsTable').DataTable({
-            dom:'Bfrtip',
            processing: true,
+           scrollY: "500px",
            serverSide: true,
            order: [[ 0, "desc" ]],
            ajax: "{{ url('ads-data') }}",
            responsive: true, 
-           lengthChange: false, 
            autoWidth: false,
            columns: [
                { data: 'id' },
