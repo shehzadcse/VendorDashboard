@@ -50,8 +50,16 @@ Route::group(['middleware' => 'adminauth'], function(){
     Route::get('ads-data', [ManageAdsController::class, 'getData'])->name('ads-data');
     Route::post('update-ad-status', [ManageAdsController::class, 'UpdateStatus'])->name('UpdateAdStatus');
     Route::get('create-sub-admin', [AdminController::class, 'createAdmin'])->name('create_admin');
+    Route::post('create-sub-admin', [AdminController::class, 'SaveAdmin'])->name('create_admin_save');
     Route::get('admin-data', [AdminController::class, 'getData'])->name('admin-data');
+    Route::get('admin-data-by-id', [AdminController::class, 'getAdminData'])->name('getAdminData');
     Route::get('logout', [AdminController::class, 'logout'])->name('logout');
+
+    Route::get('manageprofile', [AdminController::class, 'manageProfile'])->name('edit_admin_profile');
+    Route::post('saveprofile', [AdminController::class, 'saveProfile'])->name('edit_admin_profile_save');
+    Route::get('managepassword', [AdminController::class, 'resetPassword'])->name('edit_admin_password');
+
+    Route::post('update-admin', [AdminController::class, 'updateAdmin'])->name('updateAdmin');
 });
 // Route::get('/dashboard', function () {
 //     return view('welcome');

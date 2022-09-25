@@ -124,8 +124,8 @@ class backendController extends Controller
         $ad_data = new ad_data();
         $ad_data->company_name = $request->company_name;
         $ad_data->ad_tagline = $request->tagline;
-        $ad_data->city = $request->city_name;
-        $ad_data->state = $request->state;
+        $ad_data->city = ucfirst($request->city_name);
+        $ad_data->state = ucfirst($request->state);
         $ad_data->country = $request->country;
         $ad_data->pincode = $request->pincode;      
         $ad_data->hblocks = $request->blocksData['hBlocks'];
