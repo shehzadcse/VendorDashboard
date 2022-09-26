@@ -21,6 +21,11 @@ class CreateAdminsTable extends Migration
             $table->string('alt_email')->unique()->nullable();
             $table->string('password');
             $table->string('type')->default('subadmin');            
+            $table->boolean('allowed_city')->default(1);
+            $table->boolean('allowed_state')->default(0);
+            $table->string('address_1')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
             $table->timestamps();
         });
     }

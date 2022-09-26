@@ -57,6 +57,7 @@ class AdminController extends Controller
             $request->session()->put('name', $user->name);
             $request->session()->put('type', $user->type);
             $request->session()->put('email', $user->email);
+            $request->session()->put('id', $user->id);
             return redirect('dashboard');            
         }
     }
@@ -144,6 +145,89 @@ class AdminController extends Controller
         return response()->json($response);
 
     }
+    public function SaveAdmin(Request $request)
+    {
+        $data['name'] = $request->admin_name;
+        $data['email'] = $request->admin_email;
+        $data['alt_email'] = $request->admin_alt_email;
+        $data['password'] = \Hash::make($request->admin_password);
+        $data['phone'] = $request->admin_phone;
+        $data['type'] = $request->admin_type;
+        // $data['allowed_city'] = $request->admin_enabled_city;
+        $data['allowed_state'] = $request->admin_enabled_state;
+        $data['city']=$request->admin_city;
+        $data['state']=$request->admin_state;
+        // dd($data);
+        $data = \DB::table('admins')->insert($data);
+        $response['status'] = 'Success';
+        $response['message'] = 'Data Saved Successfully ';
+        return response()->json($response);
+    }
+    public function getAdminData(Request $request){
+        // $ads = \DB::table('ad_datas')
+        // ->where('id', '=', $request->id)
+        // ->get();
+        $userData =\DB::table('admins')           
+            ->where('id','=', $request->id)         
+            ->get()->toArray();       
+        $response['status']='success';
+        $response['data']['admin_data']=$userData;
+        // $response['msg']="Record Updated Successfully !";
+        return  response()->json($response);
+    }
+    public function manageProfile(Request $request)
+    {
+        # code...
+        $userData =\DB::table('admins')           
+            ->where('id','=', $request->session()->get('id'))         
+            ->get();       
+        return view('admin.ManageProfile')->with(['data'=>$userData]);
+    }
+    public function resetPassword(Request $request)
+    {
+        # code...
+        $userData =\DB::table('admins')           
+            ->where('id','=', $request->session()->get('id'))         
+            ->get();       
+        return view('admin.ResetPassword')->with(['data'=>$userData]);
+    }
+    public function saveProfile(Request $request)
+    {
+        # code...
+        $data['name'] = $request->inputFirstName;
+        $data['email'] = $request->inputEmailAddress;
+        $data['alt_email'] = $request->inputAltEmailAddress;
+        // $data['password'] = \Hash::make($request->edit_admin_password);
+        $data['phone'] = $request->phone;
+        $data['city']=$request->inputCity;
+        $data['state']=$request->inputState;
+        $data = \DB::table('admins')->where('id', '=',   $request->session()->get('id'))->update($data);
+        $userData =\DB::table('admins')           
+            ->where('id','=', $request->session()->get('id'))         
+            ->get();       
+        return view('admin.ManageProfile')->with(['data'=>$userData]);
+        // return redirect('manageprofile');  
+       
+    }
+    public function updateAdmin(Request $request)
+    {
+        # code...
+        $data['name'] = $request->edit_admin_name;
+        $data['email'] = $request->edit_admin_email;
+        $data['alt_email'] = $request->edit_admin_alt_email;
+        // $data['password'] = \Hash::make($request->edit_admin_password);
+        $data['phone'] = $request->edit_admin_phone;
+        // $data['type'] = $request->edit_admin_type;
+        // $data['allowed_city'] = $request->edit_admin_enabled_city;
+        $data['allowed_state'] = $request->edit_admin_enabled_state;
+        $data['city']=$request->edit_admin_city;
+        $data['state']=$request->edit_admin_state;
+        $data = \DB::table('admins')->where('id', '=',  $request->admin_id)->update($data);
+        $response['status'] = 'Success';
+        $response['message'] = 'Data Updated Successfully ';
+        return response()->json($response);
+    }
 
 
 }
+
