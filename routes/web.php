@@ -58,6 +58,7 @@ Route::group(['middleware' => 'adminauth'], function(){
     Route::get('manageprofile', [AdminController::class, 'manageProfile'])->name('edit_admin_profile');
     Route::post('saveprofile', [AdminController::class, 'saveProfile'])->name('edit_admin_profile_save');
     Route::get('managepassword', [AdminController::class, 'resetPassword'])->name('edit_admin_password');
+    Route::get('managetickets', [AdminController::class, 'manageTickets'])->name('manageTickets');
 
     Route::post('update-admin', [AdminController::class, 'updateAdmin'])->name('updateAdmin');
 });

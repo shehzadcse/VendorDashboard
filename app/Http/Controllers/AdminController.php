@@ -227,6 +227,11 @@ class AdminController extends Controller
         $response['message'] = 'Data Updated Successfully ';
         return response()->json($response);
     }
+    public function manageTickets(Request $request)
+    {
+    //    dd('shehzad');
+        return view('admin.ManageTickets');
+    }
 
 
 }
