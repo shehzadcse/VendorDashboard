@@ -5,6 +5,7 @@ use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ManageUserController;
 use App\Http\Controllers\ManageAdsController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdStatiticsController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +60,9 @@ Route::group(['middleware' => 'adminauth'], function(){
     Route::post('saveprofile', [AdminController::class, 'saveProfile'])->name('edit_admin_profile_save');
     Route::get('managepassword', [AdminController::class, 'resetPassword'])->name('edit_admin_password');
     Route::get('managetickets', [AdminController::class, 'manageTickets'])->name('manageTickets');
+
+
+    Route::get('adstatistics', [AdStatiticsController::class, 'index'])->name('adStatistics');
 
     Route::post('update-admin', [AdminController::class, 'updateAdmin'])->name('updateAdmin');
 });
