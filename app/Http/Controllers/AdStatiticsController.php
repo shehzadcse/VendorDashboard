@@ -19,7 +19,7 @@ class AdStatiticsController extends Controller
             ->select('users.*', 'ad_datas.*', 'ad_stats.*')
             ->get()->toArray();
             // dd($ads);
-        return view('admin.Adstatistics')->with(["data"=>$ads]);  
+        return view('admin.AdStatistics')->with(["data"=>$ads]);  
     }
 
     /**
