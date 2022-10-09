@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ad_coordinates;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Models\ad_data;
+use App\Models\Ad_data;
 // use App\Models\Ad_coordinates;
 use App\Models\Ad_stats;
 use App\Models\OtpMaster;
