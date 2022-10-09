@@ -258,7 +258,7 @@ class backendController extends Controller
         $path = Storage::disk('s3')->put('', $request->image, 'public');
         $path = Storage::disk('s3')->url($path);
         $result = User::where('id',$request->id)->update(['imageUrl'=>$path]);
-        return Response::json($result);
+        return Response::json($path);
     }
     public function updatePersonalProfile(Request $request){
 
