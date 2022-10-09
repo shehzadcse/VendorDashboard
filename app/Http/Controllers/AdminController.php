@@ -181,6 +181,9 @@ class AdminController extends Controller
         $userData =\DB::table('admins')           
             ->where('id','=', $request->session()->get('id'))         
             ->get();       
+            // dd($userData[0]->name);
+            // json_decode(json_encode($array), FALSE);
+
         return view('admin.ManageProfile')->with(['data'=>$userData]);
     }
     public function resetPassword(Request $request)
@@ -204,8 +207,10 @@ class AdminController extends Controller
         $data = \DB::table('admins')->where('id', '=',   $request->session()->get('id'))->update($data);
         $userData =\DB::table('admins')           
             ->where('id','=', $request->session()->get('id'))         
-            ->get();       
-        return view('admin.ManageProfile')->with(['data'=>$userData]);
+            ->get()->toArray();
+            return redirect('manageprofile');
+            // dd($userData);
+        // return view('admin.ManageProfile')->with(['data'=>$userData]);
         // return redirect('manageprofile');  
        
     }
