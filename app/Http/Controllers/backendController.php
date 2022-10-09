@@ -287,7 +287,9 @@ class backendController extends Controller
                 'country'=>$request->country,
                 'address_1'=>$request->address_1,
                 'description'=>$request->description,
-                'tags'=>$request->tags
+                'tags'=>$request->tags,
+                'latitude'=>$request->latitude,
+                'longitude'=>$request->longitude
             ]
         );
 

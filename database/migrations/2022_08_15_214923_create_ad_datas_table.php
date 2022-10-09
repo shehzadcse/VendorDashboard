@@ -28,6 +28,8 @@ class CreateAdDatasTable extends Migration
             $table->string('hblocks')->nullable();
             $table->string('wblocks')->nullable();
             $table->string('imageUrl')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->string('tags')->nullable();
             $table->string('description',1000)->nullable();
             $table->string('status')->default('inactive');            

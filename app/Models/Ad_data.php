@@ -23,6 +23,8 @@ class Ad_data extends Model
        'hblocks',
        'wblocks',
        'tags',
+       'latitude',
+       'longitude',       
        'created_at',
        'updated_at',
     ];
