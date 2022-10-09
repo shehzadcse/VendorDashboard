@@ -105,7 +105,7 @@ class backendController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
-        $ad_data = new ad_data();
+        $ad_data = new Ad_data();
         $ad_data->company_name = $request->company_name;
         $user->ad_data()->save($ad_data);
 
@@ -299,7 +299,10 @@ class backendController extends Controller
             ]
         );
         $user= Ad_data::where('id', $request->id)->get();
-        return Response::json($user);
+        $response = array();
+        $response['profileDetails']=$user;
+        $response['coordinates']= Ad_coordinates::where('ad_id',$request->id)->get();
+        return Response::json($response);
     }
     public function searchAds(Request $request){
         $city = $request->location;
