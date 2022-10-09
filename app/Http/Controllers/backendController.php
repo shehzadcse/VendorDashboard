@@ -6,6 +6,7 @@ use App\Models\Ad_coordinates;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\ad_data;
+// use App\Models\Ad_coordinates;
 use App\Models\Ad_stats;
 use App\Models\OtpMaster;
 use App\Models\Ad_data as ModelsAd_data;
@@ -249,6 +250,16 @@ class backendController extends Controller
         $result = Ad_data::where('id',$request->ad_id)->update(['imageUrl'=>$path]);
         return Response::json($result);
     }
+    public function uploadProfilePic(Request $request){
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $imageName = time().'.'.$request->file('image')->extension();  
+        $path = Storage::disk('s3')->put('', $request->image, 'public');
+        $path = Storage::disk('s3')->url($path);
+        $result = User::where('id',$request->id)->update(['imageUrl'=>$path]);
+        return Response::json($result);
+    }
     public function updatePersonalProfile(Request $request){
 
         $result = User::where('id',$request->id)->update
@@ -265,9 +276,6 @@ class backendController extends Controller
     }
     public function updateBusinessProfile(Request $request){
         $tagsString = '';
-        foreach ($request->tags as $value) {
-            $tagsString .=$value.',';
-        }
         $result = Ad_data::where('id',$request->id)->update
         (
             [
@@ -279,9 +287,17 @@ class backendController extends Controller
                 'country'=>$request->country,
                 'address_1'=>$request->address_1,
                 'description'=>$request->description,
-                'tags'=>$tagsString
+                'tags'=>$request->tags
             ]
-        );        
+        );
+
+        $result = Ad_coordinates::where('ad_id',$request->id)->update
+        (
+            [
+                'latitude'=>$request->latitude,
+                'longitude'=>$request->longitude,               
+            ]
+        );
         $user= Ad_data::where('id', $request->id)->get();
         return Response::json($user);
     }
